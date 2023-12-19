@@ -1,0 +1,189 @@
+<mvc:View
+    controllerName="com.luxasia.salesorder.controller.salescompletion"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core" xmlns:fb="sap.ui.comp.filterbar"
+>
+    <Page showHeader="false">
+      <OverflowToolbar class="header" id="otbSubheader">
+            <Text
+                text="LUXASIA"
+                class="mainmenutext"
+            />
+        </OverflowToolbar>
+            <Bar class="salebar">
+                <contentLeft>
+                    <Button
+                        icon="sap-icon://arrow-left"
+                        size="1rem"
+                        press="onNavBack"
+                        class="navbutton"
+                    />
+                </contentLeft>
+                <contentMiddle>
+                    <Button
+                        text="Pending Transactions"
+                        press="onPendingTransactions"
+                        class="myTitleButton"
+                    />
+                    <Button
+                        text="Completed Transactions"
+                        press="onCompletedTransactions"
+                        class="myTitleButton"
+                    />
+                </contentMiddle>
+                <contentRight>
+                    <Text
+                        id="dateDisplay"
+                        text="{CurrentDate>/currentDate}"
+                    />
+                </contentRight>
+            </Bar>
+        <Bar class="mysubheader">
+            <contentLeft>
+                <Text
+                    text="Today's Transactions"
+                    class="myText"
+                />
+            </contentLeft>
+            <contentRight>
+                <!-- <SearchField
+                    placeholder="Search"
+                    change="onSearch"
+                /> -->
+                <Button
+                    text="My Transactions"
+                    press="onMyTransactions"
+                    class="mytranscations"
+                />
+                <Button
+                    text="Store Transactions"
+                    press="onCompletedTransactions"
+                    class="completetranscation"
+                />
+            </contentRight>
+        </Bar>
+        <content>
+        <fb:FilterBar id="filterbar" persistencyKey="myPersKey" useToolbar="false" search="onGoPress" filterChange=".onFilterChange" afterVariantLoad=".onAfterVariantLoad">
+							<fb:filterGroupItems>
+								<fb:FilterGroupItem name="Name" label="Search By Sale Order No" groupName="Group1" visibleInFilterBar="true">
+									<fb:control>
+										<SearchField id="salesOrderSearchField"
+                    placeholder="Search"
+                    change="onSearch"
+                />
+									</fb:control>
+								</fb:FilterGroupItem>
+								<fb:FilterGroupItem name="Begin Date" label="Begin Date" groupName="Group1" visibleInFilterBar="true">
+									<fb:control>
+										<DatePicker id="salesOrderBeginDate"  displayFormat="MM/dd/yyyy"/>
+									</fb:control>
+								</fb:FilterGroupItem>
+								<fb:FilterGroupItem name="End Date" label="End Date" groupName="Group1" visibleInFilterBar="true">
+									<fb:control>
+										<DatePicker id="salesOrderEndDate"  displayFormat="MM/dd/yyyy"/>
+									</fb:control>
+								</fb:FilterGroupItem>
+							</fb:filterGroupItems>
+						</fb:FilterBar>
+            <Table
+                id="salesTable"
+                items="{mainModel>/SalesOrderHeadSet}"
+            >
+                <columns>
+                    <Column>
+                        <Text text="Sale Order No" />
+                    </Column>
+                    <Column>
+                        <Text text="DocType" />
+                    </Column>
+                    <Column>
+                        <Text text="DocDate" />
+                    </Column>
+                    <Column>
+                        <Text text="Currency" />
+                    </Column>
+                    <Column>
+                        <Text text="Net Price" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Active">
+                        <cells>
+                            <Text text="{mainModel>SalesorderNo}"/>
+                            <Text text="{mainModel>DocType}"/>
+                            <!-- <Text text="{mainModel>DocDate}"/> -->
+                            <Text text="{
+				        path: 'mainModel>DocDate',
+				        type: 'sap.ui.model.type.Date',
+				        formatOptions: {
+				          pattern: 'MM/dd/yyyy'
+				        }
+				      }" />
+                            <Text text="{mainModel>Currency}"/>
+                            <Text text="{mainModel>NetPrice}"/>
+                            <!-- <Text
+                                text="{SalesData>SaleId}"
+                                class="myBlackText"
+                            />
+                            <VBox>
+                                <items>
+                                    <List
+                                        items="{SalesData>Products}"
+                                        mode="None"
+                                    >
+                                        <items>
+                                            <CustomListItem>
+                                                <HBox>
+                                                    <items>
+                                                        <Text
+                                                            text="{SalesData>Name}"
+                                                            class="myBlackText"
+                                                        />
+                                                        <Button
+                                                            icon="sap-icon://delete"
+                                                            press="onDeleteProduct"
+                                                            class="deleteicon"
+                                                        />
+                                                    </items>
+                                                </HBox>
+                                            </CustomListItem>
+                                        </items>
+                                    </List>
+                                </items>
+                            </VBox>
+                            <VBox>
+                                <Text
+                                    text="{= ${SalesData>Products/0/Price} }"
+                                    class="myBlackText"
+                                />
+                                <Text
+                                    text="{= ${SalesData>Products/1/Price} }"
+                                    class="myBlackText"
+                                />
+                            </VBox>
+
+                            <Text
+                                text="{path: 'SalesData>Products', formatter: '.calculateTotalPrice'}"
+                                class="myBlackText"
+                            />
+                            <Text
+                                text="{= ${SalesData>Products/0/Customer} }"
+                                class="myBlackText"
+                            />
+                            <Text
+                                text="{= ${SalesData>Products/0/Status} }"
+                                class="myBlackText"
+                            />
+                            <Text
+                                text="{= ${SalesData>Products/0/Reference} }"
+                                class="myBlackText"
+                            /> -->
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

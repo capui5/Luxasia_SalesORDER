@@ -1,0 +1,36 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog showHeader="false" id="qrfrag">
+        <VBox
+            xmlns="sap.m"
+            class="sapUiContentPadding"
+            alignItems="End"
+        >
+            <Button
+                id="helloDialogButton1"
+                icon="sap-icon://decline"
+                press=".onCloseFrag1"
+            />
+        </VBox>
+
+        <HBox
+            width="350px"
+            alignItems="Center"
+            justifyContent="Center"
+        >
+            <VBox
+                alignItems="Center"
+                justifyContent="Center"
+            >
+                <Image
+                    id="qrcode"
+                    width="250px"
+                    height="250px"
+                />
+                <!-- ID "qrcode" for the Image control -->
+            </VBox>
+        </HBox>
+    </Dialog>
+</core:FragmentDefinition>
