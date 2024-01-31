@@ -1,0 +1,25 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <SelectDialog
+        noDataText="No Sales Document Type Found"
+        title="Select Sales Document Type"
+		multiSelect="true"
+        search=".onSearch" 
+        searchPlaceholder="Search by Sales Document Type"
+        confirm=".onValueHelpForSalesDocumentTypeConfirm"
+        cancel=".onValueHelpForSalesDocumentTypeClose"
+        showClearButton="true"
+        items="{
+			path: '/ValueHelpSet',
+			filters:[{path:'Field',operator:'EQ',value1:'SALES_DOC_TYPE'}]
+		}" 
+    >
+        <StandardListItem
+            title="{FieldValue}"
+            description="{Description}"
+            type="Active"
+        />
+    </SelectDialog>
+</core:FragmentDefinition>

@@ -1,0 +1,25 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <SelectDialog
+        noDataText="No Article Found"
+        title="Select Article"
+		multiSelect="true"
+        search=".onSearch" 
+        searchPlaceholder="Search by Article Number"
+        confirm=".onValueHelpForSiteConfirm"
+        cancel=".onValueHelpForSiteClose"
+        showClearButton="true"
+        items="{
+			path: '/ValueHelpSet',
+			filters:[{path:'Field',operator:'EQ',value1:'MATERIAL'}]
+		}" 
+    >
+        <StandardListItem
+            title="{path:'FieldValue',formatter:'.formatter.precendingZerosRemvoal'}"
+            description="{Description}"
+            type="Active"
+        />
+    </SelectDialog>
+</core:FragmentDefinition>

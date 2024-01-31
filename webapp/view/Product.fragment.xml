@@ -79,6 +79,7 @@
                             id="CurrentValue"
                             value="{ProductSetModel>quantity}"
                             width="100px"
+                            min="1"
                             class="step_input"
                         />
                           <Text text="{ProductSetModel>UOM}" />

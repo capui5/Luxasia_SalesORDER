@@ -11,7 +11,11 @@
             mode="MultiSelect"
             selectionChange="onItemSelect"
             inset="false"
-            items="{ProductSetModel>/}"
+            items="{path: 'mainModel>/ProductSet',  length :5000}"
+            growing="true"
+            growingThreshold="1000"
+          
+           
         >
             <headerToolbar>
                 <OverflowToolbar>
@@ -20,7 +24,13 @@
                             text="SEARCH FOR PRODUCT"
                             level="H2"
                         />
+                          <SearchField
+            width="22em"
+            search="onSearch"
+            placeholder="Search Products"
+        />
                         <ToolbarSpacer />
+                       
                      
                           <Button
                     id="searchproductclose"
@@ -59,7 +69,7 @@
                 >
                     <Text text="ARTICLE NO" />
                 </Column >
-                <Column  >
+                <Column visible="false" >
                     <Text text="QUANTITY" />
                 </Column>
                 <Column   minScreenWidth="Desktop"
@@ -78,22 +88,22 @@
                     <cells>
                         <ObjectIdentifier
                             title="{Name}"
-                            text="{ProductSetModel>ArticleNo}"
+                            text="{path:'mainModel>ArticleNo',formatter:'.formatter.precendingZerosRemvoal'}"
                         />
-                        <Text text="{ProductSetModel>Barcode}" />
-                        <Text text="{ProductSetModel>ArticleDesc}" />
-                        <Text text="{ProductSetModel>ArticleType}" />
+                        <Text text="{mainModel>Barcode}" />
+                        <Text text="{mainModel>ArticleDesc}" />
+                        <Text text="{mainModel>ArticleType}" />
                         <!-- <ObjectNumber number="{ProductSetModel>ArticleNo}" /> -->
-                        <ObjectNumber number="{path:'ProductSetModel>ArticleNo',formatter:'.formatter.precendingZerosRemvoal'}"/>
-                         <StepInput
+                        <ObjectNumber number="{path:'mainModel>ArticleNo',formatter:'.formatter.precendingZerosRemvoal'}"/>
+                         <StepInput 
                             id="CurrentValue"
-                            value="{ProductSetModel>quantity}"
-                            min="1"
+                            value="{mainModel>quantity}"
+                          min ="1"
                             width="100px"
                             class="step_input"
                         />
-                          <Text text="{ProductSetModel>UOM}" />
-                        <ObjectNumber number="{ProductSetModel>RetailPrice}" />
+                          <Text text="{mainModel>UOM}" />
+                        <ObjectNumber number="{mainModel>RetailPrice}" />
                         <!-- <StepInput
                             id="CurrentValue"
                             value="{mainModel>quantity}"

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="LuxasiaSB" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Users" EntityType="LuxasiaSB.Users">
+                    <NavigationPropertyBinding Path="store" Target="STORE"/>
+                </EntitySet>
+                <EntitySet Name="STORE" EntityType="LuxasiaSB.STORE">
+                    <NavigationPropertyBinding Path="REQ_ID1" Target="Users"/>
+                    <NavigationPropertyBinding Path="brands" Target="Brands"/>
+                </EntitySet>
+                <EntitySet Name="Brands" EntityType="LuxasiaSB.Brands">
+                    <NavigationPropertyBinding Path="REQ_ID1" Target="STORE"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Users">
+                <Key>
+                    <PropertyRef Name="Email"/>
+                    <PropertyRef Name="StoreID"/>
+                </Key>
+                <Property Name="Email" Type="Edm.String" Nullable="false"/>
+                <Property Name="StoreID" Type="Edm.String" Nullable="false"/>
+                <NavigationProperty Name="store" Type="LuxasiaSB.STORE" Partner="REQ_ID1">
+                    <OnDelete Action="Cascade"/>
+                    <ReferentialConstraint Property="Email" ReferencedProperty="REQ_ID1_Email"/>
+                    <ReferentialConstraint Property="StoreID" ReferencedProperty="REQ_ID1_StoreID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="STORE">
+                <Key>
+                    <PropertyRef Name="REQ_ID"/>
+                </Key>
+                <Property Name="REQ_ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="REQ_ID1" Type="LuxasiaSB.Users" Partner="store">
+                    <ReferentialConstraint Property="REQ_ID1_Email" ReferencedProperty="Email"/>
+                    <ReferentialConstraint Property="REQ_ID1_StoreID" ReferencedProperty="StoreID"/>
+                </NavigationProperty>
+                <Property Name="REQ_ID1_Email" Type="Edm.String"/>
+                <Property Name="REQ_ID1_StoreID" Type="Edm.String"/>
+                <Property Name="storeID" Type="Edm.String"/>
+                <NavigationProperty Name="brands" Type="Collection(LuxasiaSB.Brands)" Partner="REQ_ID1">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Brands">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="REQ_ID1_REQ_ID"/>
+                    <PropertyRef Name="email"/>
+                    <PropertyRef Name="storeID"/>
+                    <PropertyRef Name="BRANDID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="REQ_ID1" Type="LuxasiaSB.STORE" Partner="brands">
+                    <ReferentialConstraint Property="REQ_ID1_REQ_ID" ReferencedProperty="REQ_ID"/>
+                </NavigationProperty>
+                <Property Name="REQ_ID1_REQ_ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="email" Type="Edm.String" Nullable="false"/>
+                <Property Name="storeID" Type="Edm.String" Nullable="false"/>
+                <Property Name="BRANDID" Type="Edm.String" Nullable="false"/>
+                <Property Name="BrandDESC" Type="Edm.String"/>
+            </EntityType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

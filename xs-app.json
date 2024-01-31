@@ -15,8 +15,8 @@
       "csrfProtection": false
     },
     {
-      "source": "^/odata/(.*)$",
-      "target": "/odata/$1",
+      "source": "^/luxasia/(.*)$",
+      "target": "/luxasia/$1",
       "authenticationType": "none",
       "destination": "LUXASIA_CAP",
       "csrfProtection": false

@@ -1,4 +1,4 @@
-<mvc:View
+ <mvc:View
     controllerName="com.luxasia.salesorder.controller.brand"
     xmlns:l="sap.ui.layout"
     xmlns:mvc="sap.ui.core.mvc"
@@ -11,8 +11,21 @@
         <masterPages>
             <Page
                 id="master"
-                title="MY BRANDS"
+                showHeader="false"
             >
+            <OverflowToolbar >
+              <!-- <Button
+                            icon="sap-icon://nav-back"
+                            press="onNavBacktoBrand"
+                        /> -->
+            <Title text="MY BRANDS"  ></Title>
+            <ToolbarSpacer />
+             <Button
+                text="ADD MORE BRAND"
+                icon="sap-icon://nav-back"
+                press="onBackToDetailPress"
+                visible="{= ${device>/system/phone}   || ${device>/system/tablet}  }"/>
+            </OverflowToolbar>
                 <content>
                     <List
                         items="{ path: 'SelectedBrandName>/selectedBrandNames'}"
@@ -38,15 +51,17 @@
                         </CustomListItem>
                     </List>
                 </content>
-                  
-                    
-                    
-                <Button
-                    text="Login"
-                    width="100%"
+                     <footer>
+                	<Toolbar>
+            <Button
+             width="100%"
+                    text="LOGIN"
                     press="Login"
-                    class="Login"
+                    class="createBtn"
                 />
+                	</Toolbar>
+        </footer>
+                    
             </Page>
         </masterPages>
 
@@ -54,9 +69,13 @@
        
             <Page
                 id="detail"
-                title="ADD NEW BRANDS"
+                showHeader="false"
             >
-            
+              <OverflowToolbar >
+            <Title text="ADD NEW BRANDS"  ></Title>
+            <ToolbarSpacer />
+             
+            </OverflowToolbar>
 
                 <content>
                     <List
@@ -95,7 +114,15 @@
                         </items>
                     </List>
                 </content>
-                
+                 <footer>
+        <Toolbar>
+            <Button
+                text="GO TO ADDED BRANDS"
+                icon="sap-icon://nav-back"
+                press="onBackToMasterPress"
+                visible="{= ${device>/system/phone} || ${device>/system/tablet}}"/>
+        </Toolbar>
+    </footer>
             </Page>
           
         </detailPages>

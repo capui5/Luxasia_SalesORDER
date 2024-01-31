@@ -1,0 +1,282 @@
+<mvc:View
+    controllerName="com.luxasia.salesorder.controller.displayWarehouseStockReport" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.ui.layout.form" xmlns:smartTable="sap.ui.comp.smarttable">
+	<Page id="displayWarehouseStockReport"  title="Display warehouse Stocks by Materials" showHeader="true" showNavButton="true" navButtonPress="onNavBack">
+		<Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="Database Selection"/>
+			</OverflowToolbar>
+		</headerToolbar>
+		<content>
+            	<f:SimpleForm minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3"
+			emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="Material"/>
+                        <HBox>
+						<Input
+                                id="articleMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpArticle"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input
+                                id="articleSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpArticle"
+                            />
+                        </HBox>
+                        <Label text="Plant"/>
+						<HBox>
+						<ComboBox 
+                                id="siteFirstInput" showSecondaryValues= "true"
+                                items="{
+			path: '/ValueHelpSet',
+			filters:[{path:'Field',operator:'EQ',value1:'SITE'}],length:99999
+		}"
+                                forceSelection="false"
+                                width="{= ${device>/system/phone} === true ? '18.5rem' : '13rem'}"
+                            >
+                                <core:ListItem
+                                    key="{FieldValue}"
+                                    text="{FieldValue}" additionalText = "{Description}"
+                                />
+                            </ComboBox>
+                            <Text
+                                text="TO"
+                                visible="false"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Select
+                                visible="false"
+                                id="siteSecondInput" 
+                                items="{
+			path: '/ValueHelpSet',
+			filters:[{path:'Field',operator:'EQ',value1:'SITE'}]
+		}"
+                                forceSelection="false"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                            >
+                                <core:Item
+                                    key="{FieldValue}"
+                                    text="{Description}"
+                                />
+                            </Select>
+                        </HBox>
+                        <Label text="Storage Location"/>
+						<HBox>
+						 <Input
+                                id="stgLocMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpStgLoc"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input
+                                id="stgLocSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpStgLoc"
+                            />
+                        </HBox>   
+                    </f:content>
+				</f:SimpleForm>
+		</content>
+	</Panel>
+	<Panel width="auto" class="sapUiResponsiveMargin">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="Scope of List"/>
+			</OverflowToolbar>
+		</headerToolbar>
+		<content>
+			<f:SimpleForm minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3"
+			emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1">
+            <f:content>
+						<Label text="Material Type"/>
+						<HBox>
+						<Input
+                                id="matTypeMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpMaterialType"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input
+                                id="matTypeSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpMaterialType"
+                            />
+                        </HBox>
+                        <Label text="Material Group"/>
+						<HBox>
+						<Input id="materialGrpFirstInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"/>
+                        <Text text="TO" class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"/>
+                        <Input id="materialGrpSecondInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"/>
+                        </HBox>
+                        <Label text="Purchasing Group"/>
+						<HBox>
+						<Input id="purchasingGroupFirstInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"/>
+                        <Text text="TO" class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"/>
+                        <Input id="purchasingGroupSecondInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"/>
+                        </HBox>
+					</f:content>
+				</f:SimpleForm>
+		</content>
+	</Panel>
+    <Panel width="auto" class="sapUiResponsiveMargin">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="Selection : Special Stocks"/>
+			</OverflowToolbar>
+		</headerToolbar>
+		<content>
+			<f:SimpleForm minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3"
+			emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1">
+            <f:content>
+						<Label text=""/>
+						<CheckBox id="splStockSelect" text="Also Select Special Stocks"/>
+                        <Label text="Special Stock Indicator"/>
+						<HBox>
+						<Input id="splStockFirstInput" maxLength="1"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"/>
+                        <Text text="TO" class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"/>
+                        <Input id="splStockSecondInput" maxLength="1"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"/>
+                        </HBox>
+					</f:content>
+				</f:SimpleForm>
+		</content>
+	</Panel>
+    <Panel width="auto" class="sapUiResponsiveMargin">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="Settings"/>
+			</OverflowToolbar>
+		</headerToolbar>
+		<content>
+			<f:SimpleForm minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3"
+			emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1">
+            <f:content>
+						<Label text=""/>
+						<CheckBox id="disNegativeStock" text="Display Negative Stocks Only"/>
+                        <Label text=""/>
+						<CheckBox id="disBatchStocks" text="Display Batch Stocks"/>
+						<Label text=""/>
+						<CheckBox id="noZeroStockLines" text="No Zero Stock Lines"/>
+                        <Label text=""/>
+						<CheckBox id="doNotDisplayValue" text="Do not Display Values"/>
+					</f:content>
+				</f:SimpleForm>
+		</content>
+	</Panel>
+     <footer >
+                    <Bar class="barClass">
+                        <contentRight>
+                              <Button  
+                    text="Execute"
+                    press="onExecutePress"
+                    class="edit" 
+                />
+                        </contentRight>
+                    </Bar>
+                </footer>
+	</Page>
+    <Page id="tableForDisplayWarehouseStockReport" title="Display warehouse Stocks by Materials" showHeader="true" showNavButton="true" navButtonPress="onNavBackShelfLifeTable">
+     <!-- <Table
+            items="{inventoryStockItems>/}" growing="true" growingThreshold="20"
+            id="inventoryStockTable"
+        >
+            <columns>
+                <Column >
+                    <Text text="Article No" />
+                </Column>
+                <Column
+                    minScreenWidth="Desktop"
+                    demandPopin="true"
+                    hAlign="Center"
+                >
+                    <Text text="Article Desc" />
+                </Column>
+                <Column
+                  minScreenWidth="Desktop"
+                    demandPopin="true"
+                    hAlign="Center"
+                >
+                    <Text text="ArticleType" />
+                </Column>
+                 <Column  minScreenWidth="Desktop"
+                    demandPopin="true" hAlign="Center">
+                   <Text text="Barcode"/>
+                </Column>
+                <Column
+                    hAlign="Center">
+                   
+                </Column>
+                <Column  minScreenWidth="Desktop"
+                    demandPopin="true" hAlign="Center">
+                    <Text text="Stock Qty" />
+                </Column>
+                  <Column hAlign="Center" width="7rem"> 
+                   <Text text="Count Qty"/>
+                </Column>
+                <Column minScreenWidth="Desktop"
+                    demandPopin="true" hAlign="Center">
+                    <Text text="Average Price" />
+                </Column>
+                <Column minScreenWidth="Desktop" 
+                    demandPopin="true"  hAlign="Center">
+                    <Text text="UOM" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem vAlign="Middle">
+                    <cells>
+                        <Text text="{path:'inventoryStockItems>ArticleNo',formatter:'.formatter.precendingZerosRemvoal'}"/>
+                        <Text text="{inventoryStockItems>ArticleDesc}"/>
+                        <Text text="{inventoryStockItems>ArticleType}"/>
+                        <Text text="{inventoryStockItems>Barcode}"/>
+                         <Button
+                            icon="sap-icon://delete"
+                            press="onDeleteItem"
+                        />
+                        <Text text="{path:'inventoryStockItems>AvailableQty', formatter: '.formatter.decimal'}"/>
+                         <StepInput
+                            value="{inventoryStockItems>countQty}"
+                            min="1"
+                            validationMode="LiveChange"
+                            change="onQuantityChange"
+                        />
+                        <Text text="{path:'inventoryStockItems>AveragePrice', formatter: '.formatter.decimal'}"/>
+                        <Text text="{inventoryStockItems>UOM}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table> -->
+        <smartTable:SmartTable id="wareHouseStockReportSmartTable" entitySet="WHStockRepSet" tableType="ResponsiveTable" useExportToExcel="true" beforeExport="onBeforeExport" useVariantManagement="true" 
+        useTablePersonalisation="true" header="Stocks by Materials" showRowCount="true" 
+        initiallyVisibleFields="Matnr,Werks,Lgort,Charg,Maktx,Meins,Lgobe,BrandDescr" beforeRebindTable="onBeforeRebindTable"
+        persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="true">
+				<!-- layout data used to make the table growing but the filter bar fixed -->
+				<smartTable:layoutData>
+					<FlexItemData growFactor="1" baseSize="0%"/>
+				</smartTable:layoutData>
+			</smartTable:SmartTable>
+    </Page>
+</mvc:View>

@@ -25,13 +25,13 @@
                     "odataVersion": "2.0"
                 }
             },
-            "data-model2": {
-                "uri": "/odata/v4/data-model/",
+            "oDataV4": {
+                "uri": "/luxasia/oDataV4/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
-                    "localUri": "localService/data-model2/metadata.xml",
-                    "odataVersion": "2.0"
+                    "localUri": "localService/oDataV4/metadata.xml",
+                    "odataVersion": "4.0"
                 }
             }
         },
@@ -96,8 +96,8 @@
                 "preload": true,
                 "settings": {}
             },
-            "CapModel": {
-                "dataSource": "data-model2",
+            "": {
+                "dataSource": "mainService",
                 "preload": true,
                 "settings": {}
             },
@@ -198,6 +198,13 @@
                     "defaultBindingMode": "TwoWay"
                 }
             },
+            "SelectedCustomerModel": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true,
+                "settings": {
+                    "defaultBindingMode": "TwoWay"
+                }
+            },
             "data-model1": {
                 "dataSource": "data-model1",
                 "preload": true,
@@ -208,15 +215,10 @@
                     "earlyRequests": true
                 }
             },
-            "data-model2": {
-                "dataSource": "data-model2",
+            "oDataV4": {
+                "dataSource": "oDataV4",
                 "preload": true,
-                "settings": {
-                    "synchronizationMode": "None",
-                    "operationMode": "Server",
-                    "autoExpandSelect": true,
-                    "earlyRequests": true
-                }
+                "settings": {}
             }
         },
         "resources": {
@@ -301,10 +303,73 @@
                     ]
                 },
                 {
+                    "name": "purchasedata",
+                    "pattern": "purchasedata",
+                    "target": [
+                        "purchasedata"
+                    ]
+                },
+                {
+                    "name": "SalesOrderItem",
+                    "pattern": "SalesOrderItem/{SSalesno}",
+                    "target": [
+                        "SalesOrderItem"
+                    ]
+                },
+                {
                     "name": "stockorder",
                     "pattern": "stockorder",
                     "target": [
                         "stockorder"
+                    ]
+                },
+                {
+                    "name": "StockList",
+                    "pattern": "StockList",
+                    "target": [
+                        "StockList"
+                    ]
+                },
+                {
+                    "name": "StockInventoryList",
+                    "pattern": "StockInventoryList",
+                    "target": [
+                        "StockInventoryList"
+                    ]
+                },
+                {
+                    "name": "stockReports",
+                    "pattern": "stockReports",
+                    "target": [
+                        "stockReports"
+                    ]
+                },
+                {
+                    "name": "shelfLifeListReport",
+                    "pattern": "shelfLifeListReport",
+                    "target": [
+                        "shelfLifeListReport"
+                    ]
+                },
+                {
+                    "name": "displayWarehouseStockReport",
+                    "pattern": "displayWarehouseStockReport",
+                    "target": [
+                        "displayWarehouseStockReport"
+                    ]
+                },
+                {
+                    "name": "salesOrderListReport",
+                    "pattern": "salesOrderListReport",
+                    "target": [
+                        "salesOrderListReport"
+                    ]
+                },
+                {
+                    "name": "TodayCustomer",
+                    "pattern": "TodayCustomer",
+                    "target": [
+                        "TodayCustomer"
                     ]
                 }
             ],
@@ -379,12 +444,75 @@
                     "viewId": "transaction",
                     "viewName": "transaction"
                 },
+                "purchasedata": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "purchasedata",
+                    "viewName": "purchasedata"
+                },
+                "SalesOrderItem": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "SalesOrderItem",
+                    "viewName": "SalesOrderItem"
+                },
                 "stockorder": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
                     "viewId": "stockorder",
                     "viewName": "stockorder"
+                },
+                "StockList": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "StockList",
+                    "viewName": "StockList"
+                },
+                "StockInventoryList": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "StockInventoryList",
+                    "viewName": "StockInventoryList"
+                },
+                "stockReports": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "stockReports",
+                    "viewName": "stockReports"
+                },
+                "shelfLifeListReport": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "shelfLifeListReport",
+                    "viewName": "shelfLifeListReport"
+                },
+                "displayWarehouseStockReport": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "displayWarehouseStockReport",
+                    "viewName": "displayWarehouseStockReport"
+                },
+                "salesOrderListReport": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "salesOrderListReport",
+                    "viewName": "salesOrderListReport"
+                },
+                "TodayCustomer": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "TodayCustomer",
+                    "viewName": "TodayCustomer"
                 }
             }
         },

@@ -4,14 +4,16 @@
 >
     <Dialog
         showHeader="false"
-        id="purchaseprod"
+        id="purchaseprod1"
     >
         <Table
-            id="mypurchaseDialog"
+            id="mypurchaseDialog1"
             mode="MultiSelect"
             selectionChange="onItemSelect"
             inset="false"
             items="{ProductSetModel>/}"
+            growing="true"
+            growingThreshold="20"
         >
             <headerToolbar>
                 <OverflowToolbar>
@@ -20,7 +22,13 @@
                             text="SEARCH FOR PRODUCT"
                             level="H2"
                         />
+                          <SearchField
+            width="22em"
+            search="onSearchUsingFilter"
+            placeholder="Search Products"
+        />
                         <ToolbarSpacer />
+                       
                      
                           <Button
                     id="searchproductclose"
@@ -53,13 +61,13 @@
                 >
                     <Text text="ARTICLE NO" />
                 </Column>
-                <Column>
+                <Column visible="false" >  
                     <Text text="QUANTITY" />
                 </Column>
                 <Column>
                     <Text text="UOM" />
                 </Column>
-                <Column>
+                <Column visible="false">
                     <Text text="Price" />
                 </Column>
             </columns>
@@ -68,36 +76,33 @@
                     <cells>
                         <ObjectIdentifier
                             title="{Name}"
-                            text="{ProductSetModel>ArticleNo}"
-                        />
+                            text="{path:'ProductSetModel>ArticleNo',formatter:'.formatter.precendingZerosRemvoal'}"/>
                         <Text text="{ProductSetModel>Barcode}" />
                         <Text text="{ProductSetModel>ArticleDesc}" />
-                        <ObjectNumber number="{ProductSetModel>ArticleNo}" />
-                         <StepInput
-                            id="CurrentValue"
+                        <ObjectNumber number="{path:'ProductSetModel>ArticleNo',formatter:'.formatter.precendingZerosRemvoal'}" />
+                        <!-- <StepInput
+                        id="quanvalue"
+                            value="{ProductSetModel>quantity}"
+                            width="100px"
+                            class="step_input"
+                        /> -->
+                        <StepInput
+                            min="1" 
                             value="{ProductSetModel>quantity}"
                             width="100px"
                             class="step_input"
                         />
-                          <Text text="{ProductSetModel>UOM}" />
+                        <Text text="{ProductSetModel>UOM}" />
                         <ObjectNumber number="{ProductSetModel>RetailPrice}" />
-                        <!-- <StepInput
-                            id="CurrentValue"
-                            value="{mainModel>quantity}"
-                            width="100px"
-                            class="step_input"
-                            change="currentChangeHandler"
-                        /> -->
-                       
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
         <footer>
-            <OverflowToolbar id="otbFooter">
+            <OverflowToolbar id="obFooter">
                 <ToolbarSpacer />
                 <Button
-                    text="ADD TO Purchase Order"
+                    text="Add To Purchase Order"
                     press="onAddToPurchase"
                 >
                     <layoutData>

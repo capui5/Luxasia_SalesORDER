@@ -1,0 +1,25 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <SelectDialog
+        noDataText="No Storage Location Found"
+        title="Select Storage Location"
+		multiSelect="true"
+        search=".onSearch" 
+        searchPlaceholder="Search Storage Location"
+        confirm=".onValueHelpForStgLocConfirm"
+        cancel=".onValueHelpForStgLocClose"
+        showClearButton="true"
+        items="{
+			path: '/ValueHelpSet',
+			filters:[{path:'Field',operator:'EQ',value1:'STG_LOC'}]
+		}"
+    >
+        <StandardListItem
+            title="{FieldValue}"
+            description="{Description}"
+            type="Active"
+        />
+    </SelectDialog>
+</core:FragmentDefinition>

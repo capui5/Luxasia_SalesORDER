@@ -1,0 +1,25 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <SelectDialog
+        noDataText="No Brands Found"
+        title="Select Brand"
+		multiSelect="true"
+        search=".onSearchForBrand" 
+        searchPlaceholder="Search by Description"
+        confirm=".onValueHelpForBrandConfirm"
+        cancel=".onValueHelpForBrandClose"
+        showClearButton="true"
+        items="{
+			path: '/ValueHelpSet',
+			filters:[{path:'Field',operator:'EQ',value1:'BRAND_ID'}]
+		}"
+    >
+        <StandardListItem
+            title="{FieldValue}"
+            description="{Description}"
+            type="Active"
+        />
+    </SelectDialog>
+</core:FragmentDefinition>

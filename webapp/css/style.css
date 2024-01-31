@@ -1,4 +1,12 @@
 /*MainMenu*/
+.storeTypeSelect>.sapMInputBaseReadonlyWrapper{
+    /* background: 0 100% / 0.375rem 0.0625rem repeat-x linear-gradient(0deg, #556b81 0, #556b81 0.25rem, transparent 0.25rem) border-box !important; */
+    /* border-bottom: 1.4px solid #000000c9 !important; */
+        background: 0 100% / 100% 0.0625rem no-repeat linear-gradient(0deg, #556b81, #556b81) border-box !important;
+        box-shadow: inset 0 0 0 0.0625rem rgba(85,107,129,0.25) !important;
+    }
+
+
 .filterBar {
     background-color: grey;
     height: 4rem;
@@ -58,6 +66,21 @@
     .header.sapMTBStandard{
         border-bottom: none;
     }
+    .headers.sapMIBar {
+        background: black;  
+        height: 40px;
+        border-bottom: none;
+    }
+    .headers.sapMTBStandard{
+        border-bottom: none;
+    }
+    .header2.sapMIBar {
+       
+        height: 50px;
+    }
+    /* .header2.sapMTBStandard{
+        border-bottom: none;
+    } */
 .sapMTextMaxWidth {
     max-width: 100%;
    
@@ -88,8 +111,8 @@
 }
  
 .sapMGT.OneByOne {
-    width: 15rem;
-    height: 26rem;
+    width: 14rem;
+    height: 18.5rem;
     border-radius: 0%;
 }
  
@@ -116,27 +139,43 @@
 /*Generic tile*/
 span#__tile0-title-inner {
     text-align: center;
-    padding-top: 12rem;
+    padding-top: 10rem;
 }
  
 span#__tile1-title-inner {
     text-align: center;
-    padding-top: 12rem;
+    padding-top: 10rem;
 }
  
 span#__tile2-title-inner {
     text-align: center;
-    padding-top: 12rem;
+    padding-top: 10rem;
 }
  
 span#__tile3-title-inner {
     text-align: center;
-    padding-top: 12rem;
+    padding-top: 10rem;
 }
  
 span#__tile4-title-inner {
     text-align: center;
-    padding-top: 12rem;
+    padding-top: 10rem;
+}
+
+span#__tile5-title-inner {
+    text-align: center;
+    padding-top: 10rem;
+}
+span#__tile6-title-inner {
+    text-align: center;
+    padding-top: 10rem;
+}
+span#__tile7-title-inner {
+    text-align: center;
+    padding-top: 10rem;
+}
+.headerContainerClass{
+    margin-top: 0.5rem !important;
 }
  
 /*Generic tiles icon*/
@@ -199,10 +238,33 @@ span#__tile4-title-inner {
     height: 2.5rem;
     color: #fff;
 }
+.tile-6 .sapMImageContentImageIcon.sapUiIcon::before {
+    font-size: 1.75rem;
+    background-color: rgb(8, 78, 88);
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #fff;
+}
+.tile-7 .sapMImageContentImageIcon.sapUiIcon::before {
+    font-size: 1.75rem;
+    background-color: rgb(8, 78, 88);
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #fff;
+}
+ 
  
 .tile-icon {
-    margin: 0 4.9rem;
-    padding-top: 5.85rem;
+    margin: 0 4.5rem;
+    /* padding-top: 5.85rem; */
    
    
 }
@@ -360,6 +422,25 @@ div#application-luxasia-display-component---customersearch--surnameInput-content
     padding: 3px;
 
 }
+.wide-button-search .sapMBtnInner:not(.sapMToggleBtnPressed):not(.sapMBtnEmphasized):not(.sapMBtnAccept):not(.sapMBtnAttention):not(.sapMBtnReject):not(.sapMBtnActive):not(.sapMBtnGhost) {
+    color: #fff;
+    background-color: rgb(8, 168, 168);
+    border-radius: 50px;
+    height: 30px;
+    width: 180px;
+    text-align: center;
+
+}
+
+.wide-button-search .sapMBtnContent {
+    color: white;
+    text-align: center;
+}
+
+.wide-button-search .sapMBtnInner {
+    padding: 3px;
+
+}
 
 .navbutton ::before {
     color: white;
@@ -412,6 +493,10 @@ div#application-luxasia-display-component---customersearch--surnameInput-content
 .wide-select {
     width: 350px;
 }
+.wide-select.sapMInputBase {
+    margin-bottom: 20px;
+}
+
 
 .wide-select::placeholder {
     color: #000;
@@ -429,21 +514,18 @@ div#container-luxasia---storeselection--storeSelect-content {
     height: 35px;
     border-radius: 30px;
     background-color: rgb(8, 168, 168);
-    border: 1px solid #fff;
 }
 .next .sapMBtnInner {
-
     background-color: rgb(8, 168, 168);
     border-radius: 30px;
     height: 40px;
-    padding: 3px;
+ 
     width: 350px;
-    margin-top: 20px;
+
 }
 
 .next .sapMBtnInner:hover {
 
-    background-color: rgb(8, 78, 88);
     background-color: rgb(8, 78, 88);
 }
 
@@ -456,7 +538,7 @@ div#container-luxasia---storeselection--storeSelect-content {
 .next .sapUiIcon{
     color: #fff;
     align-content: flex-end;
-    padding-top:5px;
+    padding-top:7px;
 }
 
 /*Storeselection*/
@@ -833,7 +915,7 @@ margin-bottom: 30px
  background-color: #000 !important;
 }
 .transtext.sapMText{
-    color : white !important;
+    color : rgb(0, 0, 0) !important;
     padding: 10px;
 }
 .sapMTileCntContent {
@@ -905,7 +987,7 @@ span#__button2-__table0-1-inner {
 .transcancel.sapMBtnBase {
     /* background-color: yellow; */
     border-radius: 20px;
-    width: 251px;
+    width: 150px;
     border: 2px solid rgb(8 78 88);
 }
 .transcancel .sapMBtnContent{
@@ -913,13 +995,16 @@ span#__button2-__table0-1-inner {
 }
 .transsave.sapMBtnBase{
     background-color: rgb(8 78 88);
-    width: 251px;
+    width: 150px;
     border-radius: 20px;
  
 }
 .transsave.sapMBtn:hover>.sapMBtnDefault.sapMBtnHoverable{
 border: none;
 }
+.transcancel.sapMBtn:hover>.sapMBtnDefault.sapMBtnHoverable{
+    border: none;
+    }
 .transsave .sapMBtnContent {
     color: white;
 }
@@ -948,7 +1033,7 @@ border: none;
     color: white;
 }
 .otbSubheader.sapMIBar{
-    background-color: #454545;
+    background-color: #a3a3a3;
     border-radius: none;
     height: 2.75rem;
 }
@@ -957,7 +1042,7 @@ border: none;
 html.sap-desktop .sapMBtn:focus>.sapMFocusable:not(.sapMBadgeIndicator):before {
     border: none;
 }
-sapMInput
+
 html.sap-desktop .sapMInput:focus>.sapMfocus.sapMInputFocus.sapMFocusable:not(.sapMBadgeIndicator):before {
     border: none;
 }
@@ -984,11 +1069,11 @@ padding-left: 65px;
     align-items: center;
     display: flex;
 }
-.sapUiRespGrid.sapUiRespGridHSpace0.sapUiRespGridVSpace0.sapUiFormResGridMain.sapUiRespGridOverflowHidden {
+ .sapUiRespGrid.sapUiRespGridHSpace0.sapUiRespGridVSpace0.sapUiFormResGridMain.sapUiRespGridOverflowHidden {
     justify-content: center;
     align-items: center;
     display: flex;
-} 
+}  
 .newcusttitle{
     justify-content: center;
     align-items: center;
@@ -1030,3 +1115,211 @@ padding-left: 65px;
 .transadd .sapMBtnContent {
     color: white;
 }
+/* Purchase data */
+.sapMTextLineClamp{
+    font-weight: bold;
+}
+.edit.sapMBtnBase{
+    background-color: rgb(8 168 168);
+    width: 180px;
+    border-radius: 20px;
+ 
+}
+.edit.sapMBtnBase:hover{
+    background-color: rgb(8 78 88);
+    width: 180px;
+    border-radius: 20px;
+ 
+}
+.edit.sapMBtn:hover>.sapMBtnDefault.sapMBtnHoverable{
+    background-color: rgb(8, 78, 88);
+    width: 180px;
+    border-radius: 20px;
+    border:none
+}
+.edit .sapMBtnContent {
+    color: white;
+}
+.barClass .sapMBarRight {
+    padding-right: 0rem !important;
+}
+
+.stockActionBtn.sapMBtnBase{
+    background-color: rgb(8 168 168);
+    width: 120px;
+    border-radius: 20px;
+ 
+}
+.stockActionBtn.sapMBtnBase:hover{
+    background-color: rgb(8 78 88);
+    width: 120px;
+    border-radius: 20px;
+ 
+}
+.stockActionBtn.sapMBtn:hover>.sapMBtnDefault.sapMBtnHoverable{
+    background-color: rgb(8, 78, 88);
+    width: 120px;
+    border-radius: 20px;
+    border:none
+}
+.stockActionBtn .sapMBtnContent {
+    color: white;
+}
+
+.filter.sapMBtnBase{
+    background-color: rgb(8 168 168);
+    width: auto;
+    border-radius: 20px;
+ 
+}
+.filter.sapMBtnBase:hover{
+    background-color: rgb(8 78 88);
+    width: auto;
+    border-radius: 20px;
+ 
+}
+.filter.sapMBtn:hover>.sapMBtnDefault.sapMBtnHoverable{
+    background-color: rgb(8, 78, 88);
+    width: auto;
+    border-radius: 20px;
+    border:none
+}
+.filter .sapMBtnContent {
+    color: white;
+}
+.datetext{
+    color: white;
+}
+.edit.sapMBtnBase{
+    background-color: rgb(8 168 168);
+     width: 180px; 
+    border-radius: 20px;
+ 
+}
+.edit.sapMBtnBase:hover{
+    background-color: rgb(8 78 88);
+   
+    width: 180px; 
+    border-radius: 20px;
+ 
+}
+.edit.sapMBtn:hover>.sapMBtnDefault.sapMBtnHoverable{
+    background-color: rgb(8, 78, 88);
+    
+     width: 180px; 
+    border-radius: 20px;
+    border:none
+}
+.edit .sapMBtnContent {
+    color: white;
+}
+
+
+.stockActionBtn.sapMBtnBase{
+    background-color: rgb(8 168 168);
+     width: 120px; 
+    border-radius: 20px;
+ 
+}
+.stockActionBtn.sapMBtnBase:hover{
+    background-color: rgb(8 78 88);
+   
+    width: 120px; 
+    border-radius: 20px;
+ 
+}
+.stockActionBtn.sapMBtn:hover>.sapMBtnDefault.sapMBtnHoverable{
+    background-color: rgb(8, 78, 88);
+    
+     width: 120px; 
+    border-radius: 20px;
+    border:none
+}
+.stockActionBtn .sapMBtnContent {
+    color: white;
+}
+
+
+.createBtn.sapMBtnBase{
+    background-color: rgb(8 168 168);
+    width: 100%;
+    /* width: 180px; */
+    border-radius: 20px;
+ 
+}
+.createBtn.sapMBtnBase:hover{
+    background-color: rgb(8 78 88);
+    width: 100%;
+    /* width: 180px; */
+    border-radius: 20px;
+ 
+}
+.createBtn.sapMBtn:hover>.sapMBtnDefault.sapMBtnHoverable{
+    background-color: rgb(8, 78, 88);
+    width: 100%;
+    /* width: 180px; */
+    border-radius: 20px;
+    border:none
+}
+.createBtn .sapMBtnContent {
+    color: white;
+}
+/* Mobile (max-width: 767px) */
+@media screen and (max-width: 767px) {
+    #cashcarrydialog {
+        width: 90%;
+        margin: 2rem auto;
+        max-height: calc(100vh - 4rem);
+        overflow-y: auto;
+    }
+ 
+    .sapUiTinyMarginBegin {
+        flex: 0 0 calc(50% - 10px);
+    }
+ 
+    .fragmentext1 {
+        padding-left: 0;
+    }
+    .fragtile {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0px;
+    }
+}
+.fragmentext{
+    font-size: larger;
+    font-weight :lighter;
+    justify-content: center;
+    padding-left: 20rem;
+ 
+}
+.luxasiaColorCodeCell{
+    background-color: rgb(218, 208, 208) !important; 
+}
+.textClass{
+    width: max-content;
+}
+/* .sapUiForm .sapUiFormElementLbl>.sapMLabel {
+
+    text-align: left !important;
+    
+    width : auto;
+    
+    } */
+/* Stock Report Class Open */
+.blockLayoutRowOne{
+    background : white ;
+}
+.blokLayoutSelctReportClass>.sapUiBlockCellContent{
+    padding: 0.5rem 1rem 0.5rem 1rem !important;
+}
+.blokLayoutSelctReportClass{
+    background-color: #fff;
+}
+.blokLayoutSelctReportClass>.sapUiBlockCellContent>.sapUiBlockCellTitle{
+    font-size: 1.5rem !important;
+}
+.darkTheme{
+    font-size: 1.5rem !important;
+}
+/* Stock Report Class close */

@@ -28,7 +28,7 @@ sap.ui.define([
             this.scheduleDailyUpdate(oDateFormat);
 
             var oModel = that.getOwnerComponent().getModel("SalesEmployeeModel");
-            this.SalesEmpId = oModel.getProperty("/results/0/Pernr");
+            this.SalesEmpId = oModel.getProperty("/results/0/Email");
             console.log(this.SalesEmpId)
             var oRouter = this.getOwnerComponent().getRouter();
       oRouter.getRoute("salescompletion").attachPatternMatched(this._onRouteMatched, this);
@@ -45,14 +45,27 @@ sap.ui.define([
             // var salesemp = new sap.ui.model.Filter("SalesEmp","EQ","50000302");
             //this.handleTransactionSalesData(plant,salesemp);
         },
-        handleTransactionSalesData:function(filter1, filter2){
-            var filters = new sap.ui.model.Filter([filter1,filter2],true);
+        handleTransactionSalesData:function(filter1, filter2, filter3){
+            var filters = new sap.ui.model.Filter([filter1,filter2,filter3],true);
             this.getView().byId("salesTable").getBinding("items").filter(filters);
         },
         onMyTransactions:function(){
             var plant = new sap.ui.model.Filter("Plant","EQ",this.sStoreId);
-            var salesemp = new sap.ui.model.Filter("SalesEmp","EQ",this.SalesEmpId);
-            this.handleTransactionSalesData(plant,salesemp);
+            var salesemp = new sap.ui.model.Filter("CreatedByEmail","EQ",this.SalesEmpId);
+            var beginDate = this.getView().byId("salesOrderBeginDate").getValue();
+            var endDate = this.getView().byId("salesOrderEndDate").getValue();
+            if(beginDate.length > 0 && endDate.length > 0){
+                var formattedBeginDate = new Date(new Date(beginDate).toString().split("GMT ")[0] + " UTC ").toISOString();
+                var formattedEndDate = new Date(new Date(endDate).toString().split("GMT ")[0] + " UTC ").toISOString();
+                var filter3 = new sap.ui.model.Filter("DocDate","BT",formattedBeginDate,formattedEndDate);
+            }else if(beginDate.length == 0){
+                sap.m.MessageToast.show("Please enter the Begin date");
+            }else if(endDate.length == 0){
+                sap.m.MessageToast.show("Please enter the End date");
+            }
+            this.handleTransactionSalesData(plant,salesemp,filter3);
+            var oText = this.getView().byId("displayText");
+            oText.setText("My Transactions...");
         },
         onSearch : function(evt){
                 var searchString = evt.getParameter("value");
@@ -68,7 +81,7 @@ sap.ui.define([
         },
         onGoPress:function(evt){
             var filter1 = new sap.ui.model.Filter("Plant","EQ",this.sStoreId);
-            var filter2 = new sap.ui.model.Filter("SalesEmp","EQ",this.SalesEmpId);
+            var filter2 = new sap.ui.model.Filter("CreatedByEmail","EQ",this.SalesEmpId);
             var beginDate = this.getView().byId("salesOrderBeginDate").getValue();
             var endDate = this.getView().byId("salesOrderEndDate").getValue();
             if(beginDate.length > 0 && endDate.length > 0){
@@ -109,6 +122,8 @@ sap.ui.define([
 
         onCompletedTransactions: function () {
             this.filterTransactions("Completed");
+            var oText = this.getView().byId("displayText");
+            oText.setText("Store Transactions...");
         },
 
         filterTransactions: function (status) {
@@ -127,7 +142,16 @@ sap.ui.define([
             }
         },
 
+        onSalesOrderPress: function(oEvent){
+            var oSelectedItem = oEvent.getSource().getParent();
 
+            // Get the Sales Order No from the selected row
+            var sSalesOrderNo = oSelectedItem.getCells()[0].getText(); // Assuming Sales Order No is in the first column
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("SalesOrderItem", { SSalesno: sSalesOrderNo });
+            // Now you can use sSalesOrderNo as needed
+            console.log("Sales Order No: ", sSalesOrderNo);
+          },
 
         calculateTotalPrice: function (aProducts) {
             let total = 0;
@@ -142,16 +166,8 @@ sap.ui.define([
         },
 
         onNavBack: function () {
-            var oHistory, sPreviousHash;
-
-            oHistory = History.getInstance();
-            sPreviousHash = oHistory.getPreviousHash();
-
-            if (sPreviousHash !== undefined) {
-                window.history.go(-1);
-            } else {
-                this.getRouter().navTo("View1", {}, true);
-            }
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("mainmenu");
         },
     });
 });

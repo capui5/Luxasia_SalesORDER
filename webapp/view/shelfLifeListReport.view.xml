@@ -1,0 +1,311 @@
+<mvc:View
+    controllerName="com.luxasia.salesorder.controller.shelfLifeListReport"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+>
+    <Page
+        id="shelfLifeListReport"
+        title="Shelf Life List"
+        showHeader="true"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+    >
+        <Panel
+            width="auto"
+            class="sapUiResponsiveMargin"
+            accessibleRole="Region"
+        >
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="Datebase Selection" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <content>
+                <f:SimpleForm
+                    minWidth="1024"
+                    maxContainerCols="2"
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanL="3"
+                    labelSpanM="3"
+                    emptySpanL="4"
+                    emptySpanM="4"
+                    columnsL="1"
+                    columnsM="1"
+                >
+                    <f:content>
+                        <Label text="Article" />
+                        <HBox>
+                            <Input
+                                id="articleMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpArticle"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input
+                                id="articleSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpArticle"
+                            />
+                        </HBox>
+                        <Label text="Site" />
+                        <HBox>
+                            <!-- <Input id="siteMultiInput" width="{= ${device>/system/phone} === true ? '100%' : '13rem'}" showValueHelp="true" valueHelpRequest="onValupHelpSite"/> -->
+                            <ComboBox 
+                                id="siteFirstInput" showSecondaryValues= "true"
+                                items="{
+			path: '/ValueHelpSet',
+			filters:[{path:'Field',operator:'EQ',value1:'SITE'}],length:99999
+		}"
+                                forceSelection="false"
+                                width="{= ${device>/system/phone} === true ? '18.5rem' : '13rem'}"
+                            >
+                                <core:ListItem
+                                    key="{FieldValue}"
+                                    text="{FieldValue}" additionalText = "{Description}"
+                                />
+                            </ComboBox>
+                            <Text
+                                text="TO"
+                                visible="false"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Select
+                                visible="false"
+                                id="siteSecondInput" 
+                                items="{
+			path: '/ValueHelpSet',
+			filters:[{path:'Field',operator:'EQ',value1:'SITE'}]
+		}"
+                                forceSelection="false"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                            >
+                                <core:Item
+                                    key="{FieldValue}"
+                                    text="{Description}"
+                                />
+                            </Select>
+                        </HBox>
+                        <Label text="Storage Location" />
+                        <HBox>
+                            <Input
+                                id="stgLocMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpStgLoc"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input
+                                id="stgLocSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpStgLoc"
+                            />
+                        </HBox>
+                        <Label text="Brand Id" />
+                        <HBox>
+                            <Input
+                                id="brandMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpBrand"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input
+                                id="brandSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpBrand"
+                            />
+                        </HBox>
+                        <Label text="Created On" />
+                        <HBox>
+                            <DatePicker
+                                width="{= ${device>/system/phone} === true ? '100%' : '13.1rem'}"
+                                id="datePickerFirst"
+                                displayFormat="MM/dd/YYYY"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <DatePicker
+                                width="{= ${device>/system/phone} === true ? '100%' : '13.1rem'}"
+                                id="datePickerSecond"
+                                displayFormat="MM/dd/YYYY"
+                            />
+                        </HBox>
+                    </f:content>
+                </f:SimpleForm>
+            </content>
+        </Panel>
+        <Panel
+            width="auto"
+            class="sapUiResponsiveMargin"
+        >
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="Scope of List" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <content>
+                <f:SimpleForm
+                    minWidth="1024"
+                    maxContainerCols="2"
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanL="3"
+                    labelSpanM="3"
+                    emptySpanL="4"
+                    emptySpanM="4"
+                    columnsL="1"
+                    columnsM="1"
+                >
+                    <f:content>
+                        <Label text="Remaining Shelf Life" />
+                        <HBox>
+                            <Input
+                                id="remainingShelfLifeFirstInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                            />
+                            <Text
+                                text="TO"
+                                visible="false"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input
+                                id="remainingShelfLifeSecondInput"
+                                visible="false"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                            />
+                        </HBox>
+                        <Label text="" />
+                        <RadioButtonGroup
+                            columns="1"
+                            id="Remshelflifewhse"
+                            width="100%"
+                        >
+                            <RadioButton text="Rem.shelf life whse" />
+                            <RadioButton text="Tot. rem. shelf life" />
+                        </RadioButtonGroup>
+
+                        <!-- <Label text="" />
+                          <RadioButtonGroup
+                            columns="3" id="Totremshelflife"
+                            width="100%">
+                            <RadioButton text="Tot. rem. shelf life" />
+                        </RadioButtonGroup> -->
+                        <Label text="" />
+                        <CheckBox
+                            id="zeroStockArticle"
+                            text="Article with zero stock"
+                        />
+                    </f:content>
+                </f:SimpleForm>
+            </content>
+        </Panel>
+        <Panel
+            width="auto"
+            class="sapUiResponsiveMargin"
+        >
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="Remaining Shelf Life/lives" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <content>
+                <f:SimpleForm
+                    minWidth="1024"
+                    maxContainerCols="2"
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanL="3"
+                    labelSpanM="3"
+                    emptySpanL="4"
+                    emptySpanM="4"
+                    columnsL="1"
+                    columnsM="1"
+                >
+                    <f:content>
+                        <Label text="" />
+                        <RadioButtonGroup
+                            id="inDays"
+                            columns="1"
+                            width="100%"
+                        >
+                            <RadioButton text="in days" />
+                            <RadioButton text="by period" />
+                        </RadioButtonGroup>
+                        <Label text="" />
+                        <!-- <RadioButtonGroup
+                            columns="3" id="byPeriod"
+                            width="100%"
+                        >
+                            <RadioButton text="by period" />
+                        </RadioButtonGroup> -->
+                    </f:content>
+                </f:SimpleForm>
+            </content>
+        </Panel>
+        <footer>
+            <Bar class="barClass">
+                <contentRight>
+                    <Button
+                        text="Execute"
+                        press="onExecutePress"
+                        class="edit"
+                    />
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+    <Page
+        id="tableForShelfLifeList"
+        title="Shelf Life List"
+        showHeader="true"
+        showNavButton="true"
+        navButtonPress="onNavBackShelfLifeTable"
+    >
+        <smartTable:SmartTable
+            id="shelfLifeListSmartTable"
+            entitySet="ShelfLifeRepSet"
+            tableType="ResponsiveTable"
+            useExportToExcel="false"
+            beforeExport="onBeforeExport"
+            useVariantManagement="true"
+            useTablePersonalisation="true"
+            header="Shelf Life List"
+            showRowCount="true"
+            initiallyVisibleFields="BrandId,Maktx,Werks,Charg,Menge,Meins,Matkl,Mtart,Ltext"
+            beforeRebindTable="onBeforeRebindTable"
+            persistencyKey="SmartTableAnalytical_Explored"
+            enableAutoBinding="true"
+            class="sapUiResponsiveContentPadding"
+            enableAutoColumnWidth="true"
+            editTogglable="true"
+        >
+            <!-- layout data used to make the table growing but the filter bar fixed -->
+            <smartTable:layoutData>
+                <FlexItemData
+                    growFactor="1"
+                    baseSize="0%"
+                />
+            </smartTable:layoutData>
+        </smartTable:SmartTable>
+    </Page>
+</mvc:View>

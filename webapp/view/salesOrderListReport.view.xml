@@ -1,0 +1,298 @@
+<mvc:View
+    controllerName="com.luxasia.salesorder.controller.salesOrderListReport"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+>
+    <Page
+        id="salesOrderListReport"
+        title="List of Sales Orders"
+        showHeader="true"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+    >
+        <Panel
+            width="auto"
+            class="sapUiResponsiveMargin"
+        >
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="Selection Parameters" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <content>
+                <f:SimpleForm
+                    minWidth="1024"
+                    maxContainerCols="2"
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanL="3"
+                    labelSpanM="3"
+                    emptySpanL="4"
+                    emptySpanM="4"
+                    columnsL="1"
+                    columnsM="1"
+                >
+                    <f:content>
+                        <Label text="Sales Organization" />
+                        <HBox>
+                            <Input
+                                id="salesOrgMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.9rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpSalesOrg"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input
+                                id="salesOrgSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.7rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpSalesOrg"
+                            />
+                        </HBox>
+                        <Label text="Sales Document" />
+                        <HBox>
+                            <Input
+                                id="salesDocMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.9rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpSalesDoc"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input
+                                id="salesDocSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.7rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpSalesDoc"
+                            />
+                        </HBox>
+                        <Label text="Sales Document Type" />
+                        <HBox>
+                            <Input id="salesDocTypeMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.9rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpSalesDocType"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input id="salesDocTypeSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.7rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpSalesDocType"
+                            />
+                        </HBox>
+                        <Label text="Document Date" />
+                        <HBox>
+                            <DatePicker id="documentBeginDate" displayFormat="MM/dd/YYYY"/>
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <DatePicker id="documentEndDate" displayFormat="MM/dd/YYYY"/>
+                        </HBox>
+                        <Label text="Requested deliv. Date" />
+                        <HBox>
+                            <DatePicker id="requestedDeliBeginDate" displayFormat="MM/dd/YYYY"/>
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <DatePicker id="requestedDeliEndDate" displayFormat="MM/dd/YYYY"/>
+                        </HBox>
+                        <Label text="Billing Date" />
+                        <HBox>
+                            <DatePicker id="billingDateBeginDate" displayFormat="MM/dd/YYYY"/>
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <DatePicker id="billingDateEndDate" displayFormat="MM/dd/YYYY"/>
+                        </HBox>
+                        <Label text="Sold-to party" />
+                        <HBox>
+                            <Input id="soldToPartyMultiInput" 
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.9rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpSoldToParty"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input id="soldToPartySingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.7rem'}"
+                                 showValueHelp="true"
+                                valueHelpRequest="onValueHelpSoldToParty"
+                            />
+                        </HBox>
+                        <Label text="Article" />
+                        <HBox>
+                        <Input
+                                id="articleMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.9rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpArticle"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input
+                                id="articleSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.7rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpArticle"
+                            />
+                        </HBox>
+                        <Label text="Brand" />
+                        <HBox>
+                        <Input
+                                id="brandMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.9rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpBrand"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input
+                                id="brandSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.7rem'}"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpBrand"
+                            />
+                        </HBox>
+                        <Label text="Compaign ID" />
+                        <HBox>
+                            <Input id="compaignIdMultiInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.9rem'}"
+                                 showValueHelp="true"
+                                valueHelpRequest="onValueHelpCompaignId"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input id="compaignIdSingleInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.7rem'}"
+                                 showValueHelp="true"
+                                valueHelpRequest="onValueHelpCompaignId"
+                            />
+                        </HBox>
+                        <Label text="Site" />
+                        <HBox>
+                             <ComboBox 
+                                id="siteFirstInput" showSecondaryValues= "true"
+                                items="{
+			path: '/ValueHelpSet',
+			filters:[{path:'Field',operator:'EQ',value1:'SITE'}],length:99999
+		}"
+                                forceSelection="false"
+                                width="{= ${device>/system/phone} === true ? '22rem' : '12.9rem'}"
+                            >
+                                <core:ListItem
+                                    key="{FieldValue}"
+                                    text="{FieldValue}" additionalText = "{Description}"
+                                />
+                            </ComboBox>
+                            <Text
+                                text="TO"
+                                visible="false"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Select
+                                visible="false"
+                                id="siteSecondInput" 
+                                items="{
+			path: '/ValueHelpSet',
+			filters:[{path:'Field',operator:'EQ',value1:'SITE'}]
+		}"
+                                forceSelection="false"
+                                width="{= ${device>/system/phone} === true ? '100%' : '13rem'}"
+                            >
+                                <core:Item
+                                    key="{FieldValue}"
+                                    text="{Description}"
+                                />
+                            </Select>
+                        </HBox>
+                        <Label text="Personnel Number" />
+                        <HBox>
+                            <Input id="personalNoFirstInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.9rem'}"
+                                 showValueHelp="true"
+                                valueHelpRequest="onValueHelpPersonalNo"
+                            />
+                            <Text
+                                text="TO"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginEnd textClass"
+                            />
+                            <Input id="personalNoSecondInput"
+                                width="{= ${device>/system/phone} === true ? '100%' : '12.7rem'}"
+                                 showValueHelp="true"
+                                valueHelpRequest="onValueHelpPersonalNo"
+                            />
+                        </HBox>
+                    </f:content>
+                </f:SimpleForm>
+            </content>
+        </Panel>
+        <footer>
+            <Bar class="barClass">
+                <contentRight>
+                    <Button
+                        text="Execute"
+                        press="onExecutePress"
+                        class="edit"
+                    />
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+    <Page
+        id="tableForSalesOrderListReport"
+        title="List of Sales Orders"
+        showHeader="true"
+        showNavButton="true"
+        navButtonPress="onNavBackShelfLifeTable"
+    >
+        <smartTable:SmartTable
+            id="salesOrderListSmartTable"
+            entitySet="SalesOrdRepSet"
+            tableType="ResponsiveTable"
+            useExportToExcel="false"
+            beforeExport="onBeforeExport"
+            useVariantManagement="true"
+            useTablePersonalisation="true"
+            header="Sales Order List"
+            showRowCount="true"
+            initiallyVisibleFields="Vbeln,Auart,Werks,Vkorg,Vtweg,Spart,Vkgrp,Kunnr"
+            beforeRebindTable="onBeforeRebindTable"
+            persistencyKey="SmartTableAnalytical_Explored"
+            enableAutoBinding="true"
+            class="sapUiResponsiveContentPadding"
+            enableAutoColumnWidth="true"
+            editTogglable="true"
+        >
+            <!-- layout data used to make the table growing but the filter bar fixed -->
+            <smartTable:layoutData>
+                <FlexItemData
+                    growFactor="1"
+                    baseSize="0%"
+                />
+            </smartTable:layoutData>
+        </smartTable:SmartTable>
+    </Page>
+</mvc:View>

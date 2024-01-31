@@ -1,0 +1,85 @@
+<mvc:View controllerName="com.luxasia.salesorder.controller.TodayCustomer"
+  	xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+<Page showHeader="false" >
+		<OverflowToolbar class="header" id="transheader">
+			<Text text="LUXASIA" class="mainmenutext"/>
+            <ToolbarSpacer />
+              
+		</OverflowToolbar>
+		
+			
+	<Table id="salesTable"
+		inset="false"
+		items="{mainModel>/CustomerSet}">
+			<infoToolbar>
+		<OverflowToolbar>
+				<Title titleStyle="Auto" text="Email :{SalesEmployeeModel>/results/0/Email}"/>
+			<ToolbarSpacer/>
+			
+    
+  
+  
+			</OverflowToolbar>
+		</infoToolbar>
+		<columns>
+			<Column
+			hAlign="Center"
+				minScreenWidth="Tablet"
+				demandPopin="true">
+				<Text text="CUSTOMER NO" />
+			</Column>
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="MOBILE NUMBER" />
+			</Column>
+			
+			<Column minScreenWidth="Desktop"
+				demandPopin="true"
+			>
+				<Text text="EMAIL ADDRESS" />
+			</Column>
+            <Column minScreenWidth="Desktop"
+				demandPopin="true"
+				>
+				<Text text="FIRST NAME" />
+			</Column>
+            <Column minScreenWidth="Desktop"
+				demandPopin="true"
+				>
+				<Text text="LAST NAME" />
+			</Column>
+           
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+				
+					<Text
+						text="{mainModel>CustomerNo}" />
+					<Text
+						text="{mainModel>Tel1Numbr}" />
+				    <Text
+						text="{mainModel>EMail}" />
+					<Text
+						text="{mainModel>Firstname}" />
+                        <Text
+						text="{mainModel>Lastname}" />
+                   
+                        
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+		<footer>
+			<OverflowToolbar id="otbFooter">
+				<ToolbarSpacer/>
+				<Button class="transsave" press="onGoSalesCompletion" text="GO BACK"/>
+				
+
+			</OverflowToolbar>
+		</footer>
+		</Page>
+</mvc:View>

@@ -21,23 +21,29 @@ server:
           - path: /odata
             url: https://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com
             destination: LUXASIA_CAP
-          - path: /odata/v4/data-model/
+          - path: /luxasia/oDataV4/
             url: http://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com/
             destination: LUXASIA_CAP
-          - path: /odata/v4/data-model/
+          - path: /luxasia/oDataV4/
             url: http://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com/
             destination: LUXASIA_CAP
-          - path: /odata/v4/data-model/
+          - path: /luxasia/oDataV4/
             url: http://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com/
             destination: LUXASIA_CAP
-          - path: /odata/v4/data-model/
+          - path: /luxasia/oDataV4/
             url: http://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com/
             destination: LUXASIA_CAP
-          - path: /odata/v4/data-model/
+          - path: /luxasia/oDataV4/
             url: https://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com/
             destination: LUXASIA_CAP
-          - path: /odata/v4/data-model/
+          - path: null
             url: http://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com
+            destination: LUXASIA_CAP
+          - path: /luxasia/oDataV4/
+            url: https://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com
+            destination: LUXASIA_CAP
+          - path: /luxasia/oDataV4/
+            url: https://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com
             destination: LUXASIA_CAP
     - name: fiori-tools-appreload
       afterMiddleware: compression
@@ -60,7 +66,7 @@ server:
             generateMockData: true
             metadataXmlPath: ./webapp/localService/metadata.xml
             mockdataRootPath: ./webapp/localService/data
-          - urlPath: /odata/v4/data-model/
-            metadataXmlPath: ./webapp/localService/data-model2/metadata.xml
-            mockdataRootPath: ./webapp/localService/data-model2/mockdata
+          - urlPath: /luxasia/oDataV4/
+            metadataXmlPath: ./webapp/localService/oDataV4/metadata.xml
+            mockdataRootPath: ./webapp/localService/oDataV4/mockdata
             generateMockData: true

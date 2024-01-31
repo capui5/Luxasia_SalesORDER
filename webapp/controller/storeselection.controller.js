@@ -6,12 +6,13 @@ sap.ui.define([
 
   return Controller.extend("com.luxasia.salesorder.controller.storeselection", {
     onInit: function () {
+      var that = this;
       // To Get the Login User data  from Btp
       var lModel = this.getOwnerComponent().getModel("LoginUserModel");
-      this.getView().setModel(lModel , "LoginUserModel")
+      this.getView().setModel(lModel, "LoginUserModel");
       var mModel = this.getOwnerComponent().getModel("mainModel");
       var SModel = this.getOwnerComponent().getModel("SalesEmployeeModel");
-      this.getView().setModel(SModel , "SalesEmployeeModel")
+      this.getView().setModel(SModel, "SalesEmployeeModel");
       var that = this;
       const url = that.getBaseURL() + "/user-api/currentUser";
 
@@ -22,43 +23,14 @@ sap.ui.define([
           console.log(data);
           lModel.setData(data);
           console.log("Model data :", lModel);
-          // Handle data here
+          // that.onLoadUserData(lModel);
         },
         error: function (xhr, status, error) {
         }
 
       });
-      // To get the Login user data from Luxasia odata service
-      if (lModel) {
-          var email = lModel.getProperty("/email");
-          console.log("Email:", email);
-      } else {
-          console.error("User Data Model not found.");
-      }
-            
-            var sEmail = 'christintan@luxasia.com';
-      
-            mModel.read("/SalesEmployees", {
-              urlParameters: {
-                StoreId: "''",
-                Email: "'" + sEmail + "'"
-              },
-              success: function (odata) {
-                SModel.setData(odata);
-                console.log(SModel);
-                that.onhandleemployeedata(SModel);
-              
-              },
-              error: function (error) {
-                // Handle errors here
-                console.error("Error:", error);
-              }
-            });
 
-          
-       
-
-
+      that.onLoadUserData(lModel);
       var storedStoreId = localStorage.getItem("selectedStoreId");
       // Function to load all stores on view initialization
       const oComponent = this.getOwnerComponent();
@@ -80,23 +52,54 @@ sap.ui.define([
       });
     },
 
-      onhandleemployeedata:function(SModel){
-        // var SModel = this.getOwnerComponent().getModel("SalesEmployeeModel");
+    onLoadUserData: function () {
+      var that = this;
+      var lModel = this.getOwnerComponent().getModel("LoginUserModel");
+      var mModel = this.getOwnerComponent().getModel("mainModel");
+      var SModel = this.getOwnerComponent().getModel("SalesEmployeeModel");
+      this.getView().setModel(SModel, "SalesEmployeeModel");
+      var email = lModel.getProperty("/email");
+      console.log("Email:", email);
+
+      // var sEmail = email;
+      var sEmail = "christintan@luxasia.com";
+      mModel.read("/SalesEmployees", {
+        urlParameters: {
+          StoreId: "''",
+          Email: "'" + sEmail + "'"
+        },
+        success: function (odata) {
+          SModel.setData(odata);
+          console.log(SModel);
+          that.onhandleemployeedata(SModel);
+        },
+        error: function (error) {
+          // Handle errors here
+          console.error("Error:", error);
+        }
+      });
+    },
+
+    onhandleemployeedata: function (SModel) {
+      // var SModel = this.getOwnerComponent().getModel("SalesEmployeeModel");
+
       var Country = SModel.getProperty("/results/0/Land")
       console.log(Country)
-      var country = new sap.ui.model.Filter("Country","EQ", Country);
+      var country = new sap.ui.model.Filter("Country", "EQ", Country);
       this.handleTransactionSalesData(country);
     },
-  handleTransactionSalesData:function(filter1){
-      var filters = new sap.ui.model.Filter([filter1],true);
+    handleTransactionSalesData: function (filter1) {
+      var filters = new sap.ui.model.Filter([filter1], true);
       this.getView().byId("storeSelect").getBinding("items").filter(filters);
-  },
+    },
     getBaseURL: function () {
       var appId = this.getOwnerComponent().getManifestEntry("/sap.app/id");
       var appPath = appId.replaceAll(".", "/");
       var appModulePath = jQuery.sap.getModulePath(appPath);
       return appModulePath;
     },
+
+
 
     onNextPagePress: function () {
 
@@ -122,10 +125,13 @@ sap.ui.define([
       if (oContext) {
         var sStoreId = oContext.getProperty("StoreId");
         var sStoreType = oContext.getProperty("StoreType");
+        var storeCount = oContext.getProperty("Country")
         var oJsonModel = this.getView().getModel("StoreModel");
+
         if (oJsonModel) {
           oJsonModel.setProperty("/selectedStoreId", sStoreId);
           oJsonModel.setProperty("/selectedStoreType", sStoreType);
+          oJsonModel.setProperty("/selectedCountry", storeCount)
           // Save selectedStoreId to localStorage
           localStorage.setItem("selectedStoreId", sStoreId);
 

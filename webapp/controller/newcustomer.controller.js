@@ -10,6 +10,7 @@ sap.ui.define([
 
   return Controller.extend("com.luxasia.salesorder.controller.newcustomer", {
     onInit: function () {
+
       var aModel = this.getOwnerComponent().getModel("CustomerNoModel")
       this.getView().setModel(aModel, "CustomerNoModel");
       var oDatePicker = this.byId("datePickerId");
@@ -21,7 +22,7 @@ sap.ui.define([
       }
       // Create a model for the date value and set the format options
       var oModel = new sap.ui.model.json.JSONModel({
-        dateValue: new Date() // Initialize with current date or your desired initial date
+        dateValue: new Date("1/1/2000")  // Initialize with current date or your desired initial date
       });
       oDatePicker.setModel(oModel);
 
@@ -29,37 +30,47 @@ sap.ui.define([
       oDatePicker.bindProperty("value", {
         path: "/dateValue",
         type: new sap.ui.model.type.Date({
-          pattern: "yyyy-MM-dd"
+          pattern: "dd-MM-yyyy"
         })
       });
-      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-
-      // var oModel = this.getOwnerComponent().getModel("BrandStoreModel");
-      // console.log(oModel);
-
       this.oRouter = this.getOwnerComponent().getRouter();
       var oOwnerComponent = this.getOwnerComponent();
       var oStoreModel = oOwnerComponent.getModel("StoreModel");
+      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+      var oCountrySelect = this.byId("country");
 
+      var oModel = this.getOwnerComponent().getModel("mainModel");
+  
+   
+      var oStoreModel = this.getOwnerComponent().getModel("StoreModel");
+    
       if (oStoreModel) {
-        var selectedStoreId = oStoreModel.getProperty("/selectedStoreId");
 
-        if (selectedStoreId) {
-          console.log("Selected Store ID found:", selectedStoreId);
+        var selectedCountry = oStoreModel.getProperty("/selectedCountry");
+
+        if (selectedCountry) {
+
+          var oCountrySelect = this.byId("country");
+          var oCountryCodeSelect = this.byId("countrycode")
+          oCountrySelect.setSelectedKey(selectedCountry);
+          oCountryCodeSelect.setSelectedKey(selectedCountry)
         } else {
-          console.log("Selected Store ID not found.");
+          console.warn("Selected country not found in StoreModel.");
         }
       } else {
         console.error("StoreModel not found.");
       }
-      // Initialize the JSON model for CSRF token
-
-    
-    
     },
+
     getRouter: function () {
       return UIComponent.getRouterFor(this);
     },
+    onNavBacktoBrand:function(){
+   
+      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+      oRouter.navTo("mainmenu");
+  },
+ 
     Onroutetotranspage: function () {
       var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
       var oCustomerNoModel = this.getView().getModel("CustomerNoModel");
@@ -81,7 +92,24 @@ sap.ui.define([
 
     onCreateProfile: function () {
       var that = this;
+      var datePicker = this.getView().byId("datePickerId");
 
+
+      var selectedDate = datePicker.getDateValue();
+      var SModel = this.getOwnerComponent().getModel("SalesEmployeeModel");
+      var UserEmail = SModel.getProperty("/results/0/Email");
+    
+
+      var currentDate = new Date();
+      var age = currentDate.getFullYear() - selectedDate.getFullYear();
+
+      // if (!this.validateRequiredFields()) {
+      //   return;
+      // }
+      if (age < 18) {
+        sap.m.MessageBox.error("You must be at least 18 years old to create a profile.");
+        return;
+      }
       var datePicker = this.getView().byId("datePickerId");
       var selectedDate = datePicker.getDateValue();
       var milliseconds = selectedDate.getTime();
@@ -147,52 +175,63 @@ sap.ui.define([
         "Dob": formattedDat,
         "SalesEmp": EmployeeId,
         "StoreId": sStoreId,
+        "CreatedByEmail": UserEmail,
       };
       var oBusyDialog = new sap.m.BusyDialog({
         title: "Creating New Customer",
         text: "Please wait...."
-    });
-    oBusyDialog.open();
+      });
+      oBusyDialog.open();
       this.getOwnerComponent().getModel("mainModel").create("/CustomerSet", payload, {
 
         success: function (data) {
-               var custno = data.CustomerNo;
+          var custno = data.CustomerNo;
 
-                var oCustomerNoModel = that.getView().getModel("CustomerNoModel");
+          var oCustomerNoModel = that.getView().getModel("CustomerNoModel");
 
-                // Check if the model exists; if not, create a new JSON model and set it to the view
-                if (!oCustomerNoModel) {
-                  oCustomerNoModel = new sap.ui.model.json.JSONModel();
-                  that.getView().setModel(oCustomerNoModel, "CustomerNoModel");
-                }
+          // Check if the model exists; if not, create a new JSON model and set it to the view
+          if (!oCustomerNoModel) {
+            oCustomerNoModel = new sap.ui.model.json.JSONModel();
+            that.getView().setModel(oCustomerNoModel, "CustomerNoModel");
+          }
 
-                // Get existing array or initialize it if it doesn't exist
-                var aCustomerFirstnames = oCustomerNoModel.getProperty("/Firstnames") || [];
+          // Get existing array or initialize it if it doesn't exist
+          var aCustomerFirstnames = oCustomerNoModel.getProperty("/Firstnames") || [];
 
-                // Add the retrieved customerNo directly to the Firstnames array
-                if (custno) {
-                  aCustomerFirstnames.push(custno); // Pushing CustomerNo into the array
-                }
+          // Add the retrieved customerNo directly to the Firstnames array
+          if (custno) {
+            aCustomerFirstnames.push(custno); // Pushing CustomerNo into the array
+          }
 
-                // Set the modified array back to the model under /Firstnames property
-                oCustomerNoModel.setProperty("/Firstnames", aCustomerFirstnames);
+          // Set the modified array back to the model under /Firstnames property
+          oCustomerNoModel.setProperty("/Firstnames", aCustomerFirstnames);
 
 
-                // Set the modified array back to the model under /Firstnames property
-                oCustomerNoModel.setProperty("/Firstnames", aCustomerFirstnames);
-                // Show a MessageBox with customer number
-                sap.m.MessageBox.success("Record successfully created\nCustomer No: " + custno, {
-                  onClose: function () {
-                    oBusyDialog.close();
-                    if (oCustomerNoModel) {
-                      oCustomerNoModel.setProperty(pathToSet, customerNumber); // Set the property at the specified path
-                    } else {
-                      console.error("CustomerNoModel not found.");
-                    }
-                  }
+          // Set the modified array back to the model under /Firstnames property
+          oCustomerNoModel.setProperty("/Firstnames", aCustomerFirstnames);
+          // Show a MessageBox with customer number
+          sap.m.MessageBox.success("Record successfully created\nCustomer No: " + custno, {
+            onClose: function () {
+              oBusyDialog.close();
+              // Clear the input fields
+              that.getView().byId("datePickerId").setValue("");
+              that.getView().byId("title").setSelectedKey("");
+              that.getView().byId("fname").setValue("");
+              that.getView().byId("lname").setValue("");
+              that.getView().byId("email").setValue("");
+              that.getView().byId("phoneno").setValue("");
+              that.getView().byId("street1").setValue("");
+              that.getView().byId("city").setValue("");
+              that.getView().byId("pcode").setValue("");
+              if (oCustomerNoModel) {
+                oCustomerNoModel.setProperty(pathToSet, customerNumber); // Set the property at the specified path
+              } else {
+                console.error("CustomerNoModel not found.");
+              }
+            }
 
-                });
-              } ,
+          });
+        },
 
 
 
@@ -212,6 +251,63 @@ sap.ui.define([
           });
         }
       });
-    }
+    },
+    validateRequiredFields: function () {
+      var that = this;
+      var valid = true;
+      var missingFields = [];
+
+
+      var requiredFields = [
+        { id: "title", label: "Title" },
+        { id: "fname", label: "First Name" },
+        { id: "lname", label: "Last Name" },
+        { id: "email", label: "Email" },
+        { id: "countrycode", label: "Mobile No" },
+        { id: "phoneno", label: "Mobile No" },
+        { id: "street1", label: "Street/City" },
+        { id: "city", label: "Street/City" },
+        { id: "pcode", label: "Pincode" },
+        { id: "country", label: "Country" },
+        { id: "datePickerId", label: "Date of Birth" },
+      ];
+
+      requiredFields.forEach(function (field) {
+        var control = that.getView().byId(field.id);
+
+        if (!control) {
+          console.error("Control with ID '" + field.id + "' not found.");
+          valid = false;
+          return;
+        }
+
+        var value;
+        if (typeof control.getValue === 'function') {
+          value = control.getValue();
+        } else if (typeof control.getSelectedKey === 'function') {
+          value = control.getSelectedKey();
+        } else {
+          console.error("Control with ID '" + field.id + "' does not have a getValue or getSelectedKey method.");
+          valid = false;
+          return;
+        }
+
+        if (!value) {
+          control.setValueState("Error");
+          control.setValueStateText("This field is required");
+          valid = false;
+          missingFields.push(field.label);
+        } else {
+          control.setValueState("None");
+        }
+      });
+
+      if (!valid) {
+
+        sap.m.MessageBox.error("Please fill in the required fields:\n" + missingFields.join(", "));
+      }
+
+      return valid;
+    },
   });
 });

@@ -9,23 +9,29 @@ sap.ui.define([
 
   return Controller.extend("com.luxasia.salesorder.controller.brand", {
     onInit: function () {
+      var oSplitContainer = this.byId("splitContainer");
+      if (sap.ui.Device.system.phone) {
+        // On phone, show master initially
+        oSplitContainer.toMaster(this.createId("detail"));
+      } else {
+      }
+
       var oStoreModel = this.getOwnerComponent().getModel("StoreModel");
-    
+
       var SModel = this.getOwnerComponent().getModel("SalesEmployeeModel");
-      this.getView().setModel(sModel, "SalesEmployeeModel" )
+      this.getView().setModel(sModel, "SalesEmployeeModel")
       var sModel = this.getOwnerComponent().getModel("mainModel");
       var sStoreId = oStoreModel.getProperty("/selectedStoreId");
       var oModel = this.getOwnerComponent().getModel("LoginUserModel");
-      this.getView().setModel(oModel, "LoginUserModel" ) // Replace "userDataModel" with your actual model name
-if (oModel) {
-    var email = oModel.getProperty("/email");
-    console.log("Email:", email);
-} else {
-    console.error("User Data Model not found.");
-}
-      
-      // var sEmail = 'christintan@luxasia.com';
+      this.getView().setModel(oModel, "LoginUserModel") // Replace "userDataModel" with your actual model name
+      if (oModel) {
+        var email = oModel.getProperty("/email");
+        console.log("Email:", email);
+      } else {
+        console.error("User Data Model not found.");
+      }
 
+      // var sEmail = 'christintan@luxasia.com';
       // sModel.read("/SalesEmployees", {
       //   urlParameters: {
       //     StoreId: "'" + sStoreId + "'",
@@ -33,7 +39,7 @@ if (oModel) {
       //   },
       //   success: function (odata) {
       //     SModel.setData(odata);
-         
+
       //   },
       //   error: function (error) {
       //     // Handle errors here
@@ -52,8 +58,21 @@ if (oModel) {
       var aModel = this.getOwnerComponent().getModel("SelectedBrandName");
       this.getView().setModel(aModel, "SelectedBrandName");
     },
+    onNavBacktoBrand: function () {
+
+      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+      oRouter.navTo("storeselection");
+    },
+    onBackToMasterPress: function () {
+      var oSplitContainer = this.byId("splitContainer");
+      oSplitContainer.toMaster(this.createId("master"));
+    },
+    onBackToDetailPress: function () {
+      var oSplitContainer = this.byId("splitContainer");
+      oSplitContainer.toDetail(this.createId("detail"));
+    },
     _onRouteMatched: function (oEvent) {
-      var that =this;
+      var that = this;
       var oArgs = oEvent.getParameter("arguments");
       var sStoreId = oArgs.SStoreId;
       this.sStoreId = sStoreId;
@@ -71,11 +90,11 @@ if (oModel) {
         oModel.read("/BrandSet", {
           filters: [oFilter],
           success: function (response) {
-          
+
             oBusyDialog.close();
             oJsonModel.setData(response.results);
             that.getView().setModel(oJsonModel, "BrandStoreModel");
-           
+
 
 
           },
@@ -83,29 +102,33 @@ if (oModel) {
             oBusyDialog.close();
           }
         });
-        var filter1 = new sap.ui.model.Filter("storeID","EQ",this.sStoreId);
-        var filter2 = new sap.ui.model.Filter("email","EQ",this.getOwnerComponent().getModel("SalesEmployeeModel").oData.results[0].Email);
-        var filters = new sap.ui.model.Filter([filter1,filter2],true);
-        var oModel = new sap.ui.model.odata.ODataModel("/odata/v4/data-model/", true);  
-        var url = "/BRANDS?$filter=storeID eq '"  + this.sStoreId + "' and email eq '"  +  this.getOwnerComponent().getModel("SalesEmployeeModel").oData.results[0].Email + "'"; 
-        oModel.read(url,{
+        var filter1 = new sap.ui.model.Filter("storeID", "EQ", this.sStoreId);
+        var filter2 = new sap.ui.model.Filter("email", "EQ", this.getOwnerComponent().getModel("SalesEmployeeModel").oData.results[0].Email);
+        var filters = new sap.ui.model.Filter([filter1, filter2], true);
+        //var oModel = new sap.ui.model.odata.ODataModel("/odata/v4/data-model/", true);  
+        if (window.location.host.indexOf("luxasia-otc-npr") == (-1))
+          var oModel = new sap.ui.model.odata.ODataModel("/luxasia/oDataV4/", true);
+        else
+          var oModel = new sap.ui.model.odata.ODataModel("/583e70a0-3890-46a1-a850-6b12595b3c78.SalesUI.comluxasiasalesorder/~141223081936+0000~/luxasia/oDataV4/", true);
+        var url = "/Brands?$filter=storeID eq '" + this.sStoreId + "' and email eq '" + this.getOwnerComponent().getModel("SalesEmployeeModel").oData.results[0].Email + "'";
+        oModel.read(url, {
           //filters:[filters],
-          success:function(oData,oResponse){
+          success: function (oData, oResponse) {
             var brandsData = JSON.parse(oResponse.body).value;
             var brandsDataArr = [];
-            for(var m = 0; m <brandsData.length;m++){
+            for (var m = 0; m < brandsData.length; m++) {
               brandsDataArr.push({
-                email : brandsData[m].email,
-                Brand_Id : brandsData[m].BRANDID,
-                value : brandsData[m].BrandDESC
-                
+                email: brandsData[m].email,
+                Brand_Id: brandsData[m].BRANDID,
+                value: brandsData[m].BrandDESC
+
               });
             }
-           var oModel = that.getView().getModel("SelectedBrandName");
-           var aSelectedBrands = oModel.getProperty("/selectedBrandNames");
-           oModel.setProperty("/selectedBrandNames", brandsDataArr);
+            var oModel = that.getView().getModel("SelectedBrandName");
+            var aSelectedBrands = oModel.getProperty("/selectedBrandNames");
+            oModel.setProperty("/selectedBrandNames", brandsDataArr);
           },
-          error:function(oData){
+          error: function (oData) {
             console.log(oData);
           }
         });
@@ -140,29 +163,43 @@ if (oModel) {
         //this.onAddServiceCall();
       }
     },
-    onAddServiceCall : function(evt){
+    onAddServiceCall: function (evt) {
       var that = this;
-      var oModel = new sap.ui.model.odata.ODataModel("/odata/v4/data-model/", true);  
-      var url = "/USERS(Email='" + this.getOwnerComponent().getModel("SalesEmployeeModel").oData.results[0].Email + "',sID='" + this.sStoreId + "')"; 
+      if (window.location.host.indexOf("luxasia-otc-npr") == (-1))
+        var oModel = new sap.ui.model.odata.ODataModel("/luxasia/oDataV4/", true);
+      else
+        var oModel = new sap.ui.model.odata.ODataModel("/583e70a0-3890-46a1-a850-6b12595b3c78.SalesUI.comluxasiasalesorder/~141223081936+0000~/luxasia/oDataV4/", true);
+      var url = "/Users(Email='" + this.getOwnerComponent().getModel("SalesEmployeeModel").oData.results[0].Email + "',StoreID='" + this.sStoreId + "')";
       var selectedBrandNames = this.getView().getModel("SelectedBrandName").getData().selectedBrandNames;
-      var brandsArr=[];
-      for(var m=0;m<selectedBrandNames.length;m++){
+      var brandsArr = [];
+      for (var m = 0; m < selectedBrandNames.length; m++) {
         brandsArr.push({
-          "email": selectedBrandNames[m].email,
-          "BRANDID": selectedBrandNames[m].Brand_Id,
-          "BrandDESC": selectedBrandNames[m].value
-
+          "email": this.getOwnerComponent().getModel("SalesEmployeeModel").oData.results[0].Email,
+              "storeID": this.sStoreId,
+              "BRANDID": selectedBrandNames[m].Brand_Id,
+              "BrandDESC": selectedBrandNames[m].value
         });
       }
+      // var payload = {
+      //   "brands": brandsArr
+      // };
       var payload = {
-        "brands": brandsArr
+        "store": {
+          "storeID": this.sStoreId,
+          "brands": brandsArr
+        }
       };
-      oModel.update(url, payload,{
+      oModel.update(url, payload, {
         //filters:[filters],
-        success:function(oData,oResponse){
-          var brandsData = JSON.parse(oResponse.body).value;
+        success: function (oData, oResponse) {
+          var oModel = that.getView().getModel("SelectedBrandName");
+          var aSelectedBrands = oModel.getProperty("/selectedBrandNames");
+          var oRouter = sap.ui.core.UIComponent.getRouterFor(that);
+          oRouter.navTo("mainmenu", {
+            selectedBrands: aSelectedBrands
+          });
         },
-        error:function(oData){
+        error: function (oData) {
           console.log(oData);
         }
       });
@@ -193,7 +230,7 @@ if (oModel) {
     //   }
     // }
     Login: function () {
-      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
       var oModel = this.getView().getModel("SelectedBrandName");
       var aSelectedBrands = oModel.getProperty("/selectedBrandNames");
 
@@ -202,9 +239,7 @@ if (oModel) {
         sap.m.MessageToast.show("Please select brands.");
       } else {
         // Navigate to "mainmenu" route and pass the selected brands as parameters
-        oRouter.navTo("mainmenu", {
-          selectedBrands: aSelectedBrands
-        });
+
         this.onAddServiceCall();
       }
     },

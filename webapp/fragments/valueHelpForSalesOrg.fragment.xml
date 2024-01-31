@@ -1,0 +1,25 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <SelectDialog
+        noDataText="No Sales Organization Found"
+        title="Select Sales Organization"
+		multiSelect="true"
+        search=".onSearch" 
+        searchPlaceholder="Search by Sales Organization"
+        confirm=".onValueHelpForSalesOrganizationConfirm"
+        cancel=".onValueHelpForSalesOrganizationClose"
+        showClearButton="true"
+        items="{
+			path: '/ValueHelpSet',
+			filters:[{path:'Field',operator:'EQ',value1:'SALES_ORG'}]
+		}" 
+    >
+        <StandardListItem
+            title="{FieldValue}"
+            description="{Description}"
+            type="Active"
+        />
+    </SelectDialog>
+</core:FragmentDefinition>

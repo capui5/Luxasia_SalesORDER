@@ -170,7 +170,7 @@
                                     id="DP2"
                                     value="{DateModel>/currentDate}"
                                     dateValue="{DateModel>/currentDate}"
-                                    displayFormat="yyyy-MM-dd"
+                                    displayFormat="dd-MM-yyyy"
                                     change="handleChange"
                                     class="sapUiSmallMarginBottom"
                                 />
@@ -233,7 +233,7 @@
                     />
                     <ToolbarSpacer />
                     <Button
-                        text="ADD"
+                        text="ADD PRODUCTS"
                         class="transadd"
                         press="onAddProduct"
                     />
@@ -274,13 +274,13 @@
                 </Column>
                 <Column
                     hAlign="Center"
-                    minScreenWidth="Desktop"
+                   minScreenWidth="Tablet"
                 >
                     <Text text="Quantity" />
                 </Column>
                 <Column
                     hAlign="Center"
-                    minScreenWidth="Desktop"
+                
                 >
                     <Text />
                 </Column>
@@ -296,10 +296,12 @@
                 >
                     <Text text="Currency" />
                 </Column>
-                <Column>
+                <Column minScreenWidth="Tablet"
+                    demandPopin="true" >
                     <Text text="Price" />
                 </Column>
-                <Column width="150px">
+                <Column    minScreenWidth="Tablet"
+                    demandPopin="true" width="150px">
                     <Text text="Discount"  />
 
                     <footer>
@@ -325,16 +327,18 @@
 
                     <!-- Initially, set visibility to false -->
                 </Column>
-                <Column>
+                <Column    minScreenWidth="Tablet"
+                    demandPopin="true">
                     <Text text="Net Price" />
 
                     <footer>
                         <FlexBox
                             direction="Column"
                             alignItems="Start"
+                            justifyContent="End"
                         >
                             <Text
-                                text="{viewModel>/totalNetPrice} {SelectedItems>/selectedItems/0/Currency} "
+                                text="{viewModel>/totalNetPrice} {SelectedItems>/selectedItems/0/Currency} " 
                                 class="myBlackText"
                             />
                             <Text
@@ -371,13 +375,17 @@
                             selectedKey="{SelectedItems>CampaignId}"
                         >
                             <items>
+                             <core:Item
+                                    key=""
+                                    text=""
+                                />
                                 <core:Item
                                     key="{CampaignModel>CampaignId}"
                                     text="{CampaignModel>CampaignId} {CampaignModel>CampaignIdDesc}"
                                 />
                             </items>
                         </ComboBox>
-                        <CheckBox selected="{SelectedItems>IsSelected}" />
+                        <CheckBox selected="{SelectedItems>IsSelected}" select="onCheckBoxSelect"  />
                         <ObjectIdentifier text="{SelectedItems>Barcode}" />
                         <!-- <ObjectIdentifier text="{SelectedItems>ArticleNo}"/> -->
                         <ObjectIdentifier
@@ -396,9 +404,7 @@
                         </HBox>
                         <StepInput
                             value="{SelectedItems>quantity}"
-                       
                             min="1"
-                            step="1"
                             width="80px"
                             validationMode="LiveChange"
                             change="onQuantityChange"

@@ -1,0 +1,43 @@
+<mvc:View
+    controllerName="com.luxasia.salesorder.controller.stockReports" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page id="Home" class="stockReportsPage" title="Stock Reports" showHeader="true" showNavButton="true" navButtonPress="onNavBack">
+		<l:BlockLayout id="BlockLayout" background="Default">
+			<l:BlockLayoutRow class="blockLayoutRowOne">
+				<l:BlockLayoutCell class="sapUiNoContentPadding">
+					<Image src="https://blog.talent500.co/wp-content/uploads/2023/06/Business-Intelligence-Developer-Salary-in-India-For-Freshers-Experienced-2023-1280x500.png" 
+                    height="18rem" width="100%"/>
+				</l:BlockLayoutCell>
+			</l:BlockLayoutRow>
+			<l:BlockLayoutRow >
+				<l:BlockLayoutCell class="blokLayoutSelctReportClass" title="Select Report Types" titleAlignment="Left"/>
+			</l:BlockLayoutRow>
+			<l:BlockLayoutRow>
+					<l:BlockLayoutCell class="luxasiaColorCodeCell"  backgroundColorSet="ColorSet6" backgroundColorShade="ShadeD">
+					<l:VerticalLayout>
+							<core:Icon src="sap-icon://shelf" size="2.5rem" color="White"/>
+						<Link text="Shelf Life List" press="onShelfLifeListReport" titleStyle="H2" class="sapMTitleStyleH2 sapUiDocTitleLink darkTheme sapUiTinyMarginTopBottom"/>
+						<Text text="ZMMB6M : List of Shlef life" class="sapUiTinyMarginBottom"/>
+					</l:VerticalLayout>
+				</l:BlockLayoutCell>
+				<l:BlockLayoutCell  backgroundColorSet="ColorSet11" backgroundColorShade="ShadeB">
+					<l:VerticalLayout>
+						<core:Icon src="sap-icon://chart-table-view" size="2.5rem" color="Default"/>
+						<Link text="Display Stocks of Material" press="onDisplayWarehouseStockReport" titleStyle="H2" class="sapMTitleStyleH2 darkTheme sapUiDocTitleLink sapUiTinyMarginTopBottom"/>
+						<Text text="MB52 : List of warehouse stock materials to display" class="sapUiTinyMarginBottom"/>
+					</l:VerticalLayout>
+				</l:BlockLayoutCell>
+			
+				<l:BlockLayoutCell class="luxasiaColorCodeCell" backgroundColorSet="ColorSet6" backgroundColorShade="ShadeD">
+					<l:VerticalLayout>
+						<core:Icon src="sap-icon://sales-order-item" size="2.5rem" color="White"/>
+						<Link text="List of Sales Orders" press="onSalesOrderListReport" class="sapMTitleStyleH2 sapUiDocTitleLink darkTheme sapUiTinyMarginTopBottom"/>
+						<Text text="ZSO05 : Sales Order list" class="sapUiTinyMarginBottom"/>
+					</l:VerticalLayout>
+				</l:BlockLayoutCell>
+			</l:BlockLayoutRow>
+			<l:BlockLayoutRow>
+			</l:BlockLayoutRow>
+		</l:BlockLayout>
+	</Page>
+</mvc:View>

@@ -37,11 +37,11 @@ server:
           - path: /odata
             url: https://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com
             destination: LUXASIA_CAP
-          - path: /odata/v4/data-model/
-            url: https://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com/
+          - path: /luxasia/oDataV4/
+            url: https://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com
             destination: LUXASIA_CAP
-          - path: /odata/v4/data-model/
-            url: http://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com
+          - path: /luxasia/oDataV4/
+            url: https://luxasia-otc-npr-cf-ap11-development-luxasia-cap-srv.cfapps.ap11.hana.ondemand.com
             destination: LUXASIA_CAP
     - name: sap-fe-mockserver
       beforeMiddleware: csp

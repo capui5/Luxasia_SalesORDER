@@ -1,0 +1,233 @@
+<mvc:View
+    controllerName="com.luxasia.salesorder.controller.StockList"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m" xmlns:core="sap.ui.core"
+    models="myData"
+>
+    <SplitContainer id="splitStockContainer">
+    
+        <masterPages>
+            <Page id="stockListMaster"
+                
+            >
+             <customHeader>
+                    <Toolbar design="Transparent">
+                        <Button
+                            icon="sap-icon://nav-back"
+                            press="onNavBack"
+                        />
+                        <Title text="Stock List" />
+                        <ToolbarSpacer/>
+                        <Button
+                            text="Show Filters"
+                            press=".onShowFilters"
+                            class="filter"
+                        />
+                    </Toolbar>
+                </customHeader>
+                
+                <content>
+                  <f:SimpleForm
+                        id="filtersContainer"
+                        layout="ResponsiveGridLayout"
+                        labelSpanL="4"
+                        labelSpanM="4"
+                        emptySpanL="1"
+                        emptySpanM="1"
+                        columnsL="1"
+                        columnsM="1"
+                        visible="false"
+                    >
+                        <f:content>
+                            <Label text="Search By Stock Count" />
+                            <Input
+                                id="stockCountNo"
+                                placeholder="Enter Stock Count Number"
+                                liveChange=".onFilterChange"
+                            />
+ 
+                            <Label text="Start Date" />
+                            <DatePicker
+                                id="startDatePicker"
+                                placeholder="Select Start Date"
+                                liveChange=".onFilterChange"
+                                displayFormat="dd-MM-yyyy"
+                            />
+ 
+                            <Label text="End Date" />
+                            <DatePicker
+                                id="endDatePicker"
+                                placeholder="Select End Date"
+                                liveChange=".onFilterChange"
+                                displayFormat="dd-MM-yyyy"
+                            />
+                            <Label text="Storage Location" />
+                            <ComboBox
+                                    items="{storageLocationModel>/}"
+                                    id="storageLocation"
+                                    showSecondaryValues="true" selectedKey="0001"
+                                    selectionChange="handleStorageLocation"
+                                >
+                                    <core:ListItem
+                                        text="{storageLocationModel>Name}"
+                                        key="{storageLocationModel>Storage_loc}"
+                                        additionalText="{storageLocationModel>Storage_loc}"
+                                    />
+                                </ComboBox>
+                            <Button
+                                text="Go"
+                                press=".onGoButtonPress"
+                                visible="{FilterModel>/filters/goButtonVisible}"
+                            />
+                        </f:content>
+                    </f:SimpleForm>
+                     <List
+                         id= "inventory"
+                        items="{path:'mainModel>/InventoryHeadSet'}"
+                        mode="SingleSelectMaster"
+                        selectionChange=".onListItemPress" updateFinished="onListUpdateFinished"
+                    >
+                        <items>
+                            <ObjectListItem
+                                title="Stock Count: {mainModel>StockCountNo}"
+                                class="poText"
+                            >
+                                <attributes>
+                                    <ObjectAttribute
+                                        text="Sales Emp: {mainModel>SalesEmp}"
+                                    />
+                                    <ObjectAttribute
+                                        text="Status Description: {mainModel>StatusDesc}"
+                                    />
+                                     <ObjectAttribute
+                                        text="Doc No: {mainModel>MaterialDocNo}"
+                                        visible="{= ${mainModel>StatusDesc} === 'Posted' }"
+                                    />
+                                     <ObjectAttribute
+                                        text="Doc Year: {mainModel>MaterialDocYr}"
+                                        visible="{= ${mainModel>StatusDesc} === 'Posted' }"
+                                    />
+                                </attributes>
+                            </ObjectListItem>
+                        </items>
+                    </List>
+                </content>
+                     <footer>
+                	<Toolbar>
+            <Button
+             width="100%"
+                    text="STOCK INVENTORY"
+                    press="onInventoryPress"
+                    class="createBtn"
+                />
+                	</Toolbar>
+        </footer>
+                    
+            </Page>
+        </masterPages>
+
+        <detailPages>
+       
+            <Page
+                id="stockListDetail"
+                title="STOCKLIST DETAILS"
+                showNavButton="{= ${device>/system/phone} }"
+                navButtonPress="onDetailNavBack"
+            >
+            
+           
+            <Table
+            items="{InventoryDetails>/}" growing="true" growingThreshold="20"
+            id="inventoryStockTableDetail" class="sapUiResponsivePadding"
+        >
+
+            <columns>
+                <Column >
+                    <Text text="Article No" />
+                </Column>
+                <Column
+                    minScreenWidth="Desktop"
+                    demandPopin="true"
+                    hAlign="Center"
+                >
+                    <Text text="Article Desc" />
+                </Column>
+                <Column
+                    minScreenWidth="Desktop"
+                    demandPopin="true"
+                    hAlign="Center"
+                >
+                    <Text text="ArticleType" />
+                </Column>
+                 <Column hAlign="Center"   demandPopin="true" minScreenWidth="Desktop">
+                   <Text text="Barcode"/>
+                </Column>
+                
+                <Column hAlign="Center"  demandPopin="true"  minScreenWidth="Desktop" >
+                    <Text text="Stock Qty" />
+                </Column>
+                  <Column hAlign="Center" width="7rem"   >
+                   <Text text="Count Qty"/>
+                </Column>
+                <Column hAlign="Center"  demandPopin="true"   minScreenWidth="Desktop">
+                    <Text text="Average Price" />
+                </Column>
+                <Column hAlign="Center"  demandPopin="true"   minScreenWidth="Desktop">
+                    <Text text="UOM" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem vAlign="Middle">
+                    <cells>
+                        <Text text="{path:'InventoryDetails>ArticleNo',formatter:'.formatter.precendingZerosRemvoal'}"/>
+                        <Text text="{InventoryDetails>ArticleDesc}"/>
+                        <Text text="{InventoryDetails>ArticleType}"/>
+                        <Text text="{InventoryDetails>Barcode}"/>
+                        <Text text="{path:'InventoryDetails>AvailableQty', formatter: '.formatter.decimal'}"/>
+                         <StepInput
+                            value="{InventoryDetails>StockQty}"
+                            min="1"
+                            editable="{=${headerModel>/Status} === 'R' ? true : false}"
+                           
+                            validationMode="LiveChange"
+                            change="onQuantityChange"
+                        />
+                         <Text text="{path:'InventoryDetails>AveragePrice', formatter: '.formatter.decimal'}"/>
+                        <Text text="{InventoryDetails>UOM}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <footer >
+                    <Bar class="barClass">
+                        <contentRight>
+                              <Button  id="postAdjustment" 
+                    text="Post Adjustment"
+                    press="onPostAdjustmentPress"
+                    class="stockActionBtn" 
+                />
+                <Button id="recount"
+                    text="Re-Count"
+                    press="onRecountPress"
+                    class="stockActionBtn"
+                />
+                <Button id="submit"
+                    text="Submit"
+                    press="onSubmitRecountedRequest"
+                    class="stockActionBtn"
+                />
+                <Button id="Cancel"
+                    text="Cancel"
+                    press="onCancelPress"
+                    class="stockActionBtn"
+                />
+                        </contentRight>
+                    </Bar>
+                </footer>
+           </Page>
+        </detailPages>
+    </SplitContainer>
+</mvc:View>
